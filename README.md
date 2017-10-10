@@ -6,13 +6,13 @@ Fall 2017, Group Zeta
 |Contributor|GitHub Account|Role|
 |:--|:--|:--|
 |Ethan P.|[eth-p](https://github.com/eth-p)|Programmer|
-|Jack M.||Programmer, Level Designer|
+|Jack M.|[741o](https://github.com/741o)|Programmer, Level Designer|
 |Leo L.||Programmer, Composer|
-|Linh T.||Artist|
-|Matt D.||Producer|
-|Matthew Z.||Artist, Level Designer|
-|Sukhdeep P.||Producer|
-|William B.||Level Designer|
+|Linh T.|[jkt637](https://github.com/jkt637)|Artist|
+|Matt D.|[MatthewWDoyle](https://github.com/MatthewWDoyle)|Producer|
+|Matthew Z.|[mzegar](https://github.com/mzegar)|Artist, Level Designer|
+|Sukhdeep P.|[spa111](https://github.com/spa111)|Producer|
+|William B.|[wiblwibl](https://github.com/wiblwibl)|Level Designer|
 
 [Discord](https://discord.gg/jfUhzBg)
 
