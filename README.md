@@ -28,6 +28,8 @@ An installation guide is available [here](https://help.github.com/articles/insta
 Unfortunately, Unity isn't perfect. If any bugs in the Unity Editor are severe enough to impede our development, it's neccessary to document them here.
 
 ## Mac OS X: "Application Not Responding" on Project Open.
+**Note: This doesn't seem to happen on the latest version.**
+
 Sometimes when you go to load the project, Unity will *permanently* hang for no apparent reason.  
 If you check the `~/Library/Logs/Unity/editor.log` file, it will say:
 
