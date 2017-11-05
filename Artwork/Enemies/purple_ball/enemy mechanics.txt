@@ -1,0 +1,1 @@
+Purple ball that can float, tracks onto the main character and attacks him.
