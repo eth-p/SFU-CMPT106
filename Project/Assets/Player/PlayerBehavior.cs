@@ -5,7 +5,7 @@ using UnityEngine;
 
 public class PlayerBehavior : MonoBehaviour {
 
-	protected const bool DEBUG = false;
+	protected const bool DEBUG = true;
 	
 	protected const float SPEED = 1.5f;
 	protected const float SPEED_MAX = 4.5f;
@@ -28,7 +28,6 @@ public class PlayerBehavior : MonoBehaviour {
 		
 		this.animator = GetComponent<Animator>();
 		this.col = GetComponent<Collider2D>();
-
 	}
 	
 	void Update() {
@@ -53,6 +52,10 @@ public class PlayerBehavior : MonoBehaviour {
 		}
 		
 		// Falling animations.
+		if (falling && this.body.position.y > falling_last_y) {
+			falling_last_y = this.body.position.y;
+		}
+		
 		this.animator.SetBool("Jumping", jumping);
 		this.animator.SetBool("Falling", falling && this.body.velocity.y < -0.1);
 		this.animator.SetFloat("FallDistance", falling_last_y - this.body.position.y);
@@ -77,7 +80,7 @@ public class PlayerBehavior : MonoBehaviour {
 		// DEBUG: Draw Rays
 		if (DEBUG) {
 			foreach (var ray in rays) {
-				Debug.DrawRay(ray, Vector3.down, Color.blue);
+				Debug.DrawRay(ray, new Vector2(0f, -0.1f), Color.blue);
 			}
 		}
 		
