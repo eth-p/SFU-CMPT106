@@ -54,6 +54,14 @@ public class playerController : MonoBehaviour {
         //walk
         float move = Input.GetAxis("Horizontal");
         playerRB.velocity = new Vector2(move * maxSpeed, playerRB.velocity.y);
+        if(move!= 0)
+        {
+            playerAnim.SetBool("isIdle", false);
+        }
+        else
+        {
+            playerAnim.SetBool("isIdle", true);
+        }
         if(move>0 && !facingRight)
         {
             flip();

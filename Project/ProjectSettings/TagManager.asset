@@ -16,7 +16,7 @@ TagManager:
   - 
   - 
   - Ground
-  - 
+  - Entity
   - 
   - 
   - 
@@ -42,4 +42,13 @@ TagManager:
   m_SortingLayers:
   - name: Default
     uniqueID: 0
+    locked: 0
+  - name: Player (Behind)
+    uniqueID: 3238544773
+    locked: 0
+  - name: Player
+    uniqueID: 3832053671
+    locked: 0
+  - name: Player (Above)
+    uniqueID: 1197524051
     locked: 0
