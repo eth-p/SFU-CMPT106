@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class HealthRenderer : MonoBehaviour {
+public class FlashlightController : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {

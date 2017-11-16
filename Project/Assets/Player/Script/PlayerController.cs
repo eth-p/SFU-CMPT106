@@ -2,32 +2,41 @@
 
 public class PlayerController : MonoBehaviour, DeathBehaviour, HurtBehaviour {
 	
-	protected const bool DEBUG = true;
+	// -----------------------------------------------------------------------------------------------------------------
+	// Constants:
 
 	protected const float SPEED = 1.5f;
-	protected const float SPEED_MAX = 4.5f;
+	protected const float SPEED_MAX_FORWARDS = 4.5f;
+	protected const float SPEED_MAX_BACKWARDS = 3.5f;
 
+	
 	// -----------------------------------------------------------------------------------------------------------------
-	// CONFIGURABLE VARIABLES:
+	// Configurable:
 
-	public LayerMask[] GroundLayers;
+	public LayerMask[] GroundLayers = {};
 	public int Jumps = 1;
 
+	
 	// -----------------------------------------------------------------------------------------------------------------
-	// INTERNAL VARIABLES:
+	// Internal:
 	
 	private int jumpsRemaining;
 	private bool jumping;
 	private bool falling;
 	private float fallingLastY;
 
+	private bool facingLeft;
+
 	private Health health;
 	private Collider2D col;
 	private Rigidbody2D body;
 	private Animator animator;
 
+	private ArmRotate armRotate;
+
+	
 	// -----------------------------------------------------------------------------------------------------------------
-	// UNITY:
+	// Unity:
 	void Start() {
 		body = GetComponent<Rigidbody2D>();
 		body.drag = 10;
@@ -35,19 +44,22 @@ public class PlayerController : MonoBehaviour, DeathBehaviour, HurtBehaviour {
 		health = GetComponent<Health>();
 		animator = GetComponent<Animator>();
 		col = GetComponent<Collider2D>();
+		
+		armRotate = GetComponentInChildren<ArmRotate>();
 	}
 
 	void Update() {
-		HandleAnimation();
+		ApplyAnimation();
 	}
 
 	void FixedUpdate() {
-		HandleGrounded();
-		HandleMovement();
+		CheckGrounded();
+		ApplyMovement();
 	}
 
+	
 	// -----------------------------------------------------------------------------------------------------------------
-	// IMPLEMENT: DeathBehaviour, HurtBehaviour
+	// Implement: DeathBehaviour, HurtBehaviour
 
 	public void OnDeath() {
 		Debug.Log("YOU DIED!");
@@ -57,14 +69,35 @@ public class PlayerController : MonoBehaviour, DeathBehaviour, HurtBehaviour {
 		Debug.Log("You took " + amount + " damage.");
 	}
 	
+	// -----------------------------------------------------------------------------------------------------------------
+	// API:
+	
+	/// <summary>
+	/// 
+	/// </summary>
+	public void FaceLeft() {
+		if (facingLeft) return;
+		
+		facingLeft = true;
+		animator.SetTrigger("Flip Left");
+		animator.ResetTrigger("Flip Right");
+	}
+	
+	public void FaceRight() {
+		if (!facingLeft) return;
+		
+		facingLeft = false;
+		animator.SetTrigger("Flip Right");
+		animator.ResetTrigger("Flip Left");
+	}
 
 	// -----------------------------------------------------------------------------------------------------------------
-	// PLAYER:
+	// Player:
 
 	/// <summary>
 	/// Update the animator states.
 	/// </summary>
-	void HandleAnimation() {
+	void ApplyAnimation() {
 		var axis = Input.GetAxis("Horizontal");
 
 		// Walking animations.
@@ -72,8 +105,6 @@ public class PlayerController : MonoBehaviour, DeathBehaviour, HurtBehaviour {
 			animator.SetBool("Idle", true);
 		} else {
 			animator.SetBool("Idle", false);
-			animator.SetTrigger(axis < 0 ? "Flip Left" : "Flip Right");
-			animator.ResetTrigger(axis < 0 ? "Flip Right" : "Flip Left");
 		}
 
 		// Falling animations.
@@ -87,9 +118,38 @@ public class PlayerController : MonoBehaviour, DeathBehaviour, HurtBehaviour {
 	}
 
 	/// <summary>
+	/// Check what buttons are pressed, and move the player if necessary.
+	/// </summary>
+	void ApplyMovement() {
+		var axis = Input.GetAxis("Horizontal");
+		var move = axis * SPEED;
+		var vx = body.velocity.x;
+		var vy = body.velocity.y;
+
+		// Jumping.
+		if (jumpsRemaining > 0 && Input.GetButtonDown("Jump")) {
+			jumping = true;
+			jumpsRemaining--;
+			vy = 30;
+		}
+
+		// Movement.
+		float max = (move < 0 && facingLeft) || (move > 0 && !facingLeft) ? SPEED_MAX_FORWARDS : SPEED_MAX_BACKWARDS;
+		if (Mathf.Abs(vx + move) < max || ((int) Mathf.Sign(vx) != (int) Mathf.Sign(move))) {
+			vx += move;
+		}
+
+		// Update.
+		body.velocity = new Vector2(
+			vx,
+			vy
+		);
+	}
+	
+	/// <summary>
 	/// Check if the player is on the ground, and update variables accordingly.
 	/// </summary>
-	void HandleGrounded() {
+	void CheckGrounded() {
 		// Calculate ray positions.
 		float rayY = col.bounds.min.y;
 		float rayMinX = col.bounds.min.x;
@@ -106,7 +166,7 @@ public class PlayerController : MonoBehaviour, DeathBehaviour, HurtBehaviour {
 		}
 
 		// DEBUG: Draw Rays
-		if (DEBUG) {
+		if (DebugSettings.RAYCAST_GROUNDCHECK) {
 			foreach (var ray in rays) {
 				Debug.DrawRay(ray, new Vector2(0f, -0.1f), Color.blue);
 			}
@@ -130,31 +190,4 @@ public class PlayerController : MonoBehaviour, DeathBehaviour, HurtBehaviour {
 		}
 	}
 
-	/// <summary>
-	/// Check what buttons are pressed, and move the player if necessary.
-	/// </summary>
-	void HandleMovement() {
-		var axis = Input.GetAxis("Horizontal");
-		var move = axis * SPEED;
-		var vx = body.velocity.x;
-		var vy = body.velocity.y;
-
-		// Jumping.
-		if (jumpsRemaining > 0 && Input.GetButtonDown("Jump")) {
-			jumping = true;
-			jumpsRemaining--;
-			vy = 30;
-		}
-
-		// Movement.
-		if (Mathf.Abs(vx + move) < SPEED_MAX || ((int) Mathf.Sign(vx) != (int) Mathf.Sign(move))) {
-			vx += move;
-		}
-
-		// Update.
-		body.velocity = new Vector2(
-			vx,
-			vy
-		);
-	}
 }

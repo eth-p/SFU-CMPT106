@@ -1,6 +1,6 @@
 fileFormatVersion: 2
 guid: 9fceafe2956504f69bcd5b139e94935a
-timeCreated: 1509382612
+timeCreated: 1510771558
 licenseType: Free
 TextureImporter:
   fileIDToRecycleName:
@@ -22,6 +22,24 @@ TextureImporter:
     21300030: Player_Spritesheet_15
     21300032: Player_Spritesheet_16
     21300034: Player_Spritesheet_17
+    21300036: Idle Left (1)
+    21300038: Idle Left (2)
+    21300040: Walk Left (1)
+    21300042: Walk Left (2)
+    21300044: Walk Left (3)
+    21300046: Walk Left (4)
+    21300048: Idle Right (1)
+    21300050: Idle Right (2)
+    21300052: Walk Right (1)
+    21300054: Walk Right (2)
+    21300056: Walk Right (3)
+    21300058: Walk Right (4)
+    21300060: Jump Left (1)
+    21300062: Fall Left (1)
+    21300064: Land Left (1)
+    21300066: Jump Right (1)
+    21300068: Fall Right (2)
+    21300070: Land Right (3)
   externalObjects: {}
   serializedVersion: 4
   mipmaps:
@@ -105,390 +123,256 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: Player_Spritesheet_0
+      name: Idle Left (1)
       rect:
         serializedVersion: 2
-        x: 1
-        y: 217
+        x: 0
+        y: 218
         width: 28
         height: 38
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
-      physicsShape:
-      - - {x: -9, y: 19}
-        - {x: -9, y: -13}
-        - {x: -8, y: -19}
-        - {x: 4, y: -19}
-        - {x: 10, y: -8}
-        - {x: 10, y: 19}
+      physicsShape: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: Player_Spritesheet_1
+      name: Idle Left (2)
       rect:
         serializedVersion: 2
-        x: 30
-        y: 217
+        x: 28
+        y: 218
         width: 28
         height: 38
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
-      physicsShape:
-      - - {x: -7, y: 19}
-        - {x: -9, y: 16}
-        - {x: -9, y: -11}
-        - {x: -8, y: -19}
-        - {x: 5, y: -19}
-        - {x: 10, y: -3}
-        - {x: 10, y: 19}
+      physicsShape: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: Player_Spritesheet_2
+      name: Walk Left (1)
       rect:
         serializedVersion: 2
-        x: 59
-        y: 217
+        x: 56
+        y: 218
         width: 28
         height: 38
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
-      physicsShape:
-      - - {x: -7, y: 19}
-        - {x: -10, y: 18}
-        - {x: -10, y: -19}
-        - {x: 6, y: -19}
-        - {x: 10, y: -9}
-        - {x: 10, y: 19}
+      physicsShape: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: Player_Spritesheet_3
+      name: Walk Left (2)
       rect:
         serializedVersion: 2
-        x: 88
-        y: 217
+        x: 84
+        y: 218
         width: 28
         height: 38
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
-      physicsShape:
-      - - {x: 10, y: 12}
-        - {x: 9, y: 19}
-        - {x: -1, y: 19}
-        - {x: -5, y: 17}
-        - {x: -9, y: 13}
-        - {x: -11, y: 4}
-        - {x: -11, y: -19}
-        - {x: 8, y: -19}
-        - {x: 8, y: -15}
-        - {x: 10, y: -2}
+      physicsShape: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: Player_Spritesheet_4
+      name: Walk Left (3)
       rect:
         serializedVersion: 2
-        x: 117
-        y: 217
+        x: 112
+        y: 218
         width: 28
         height: 38
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
-      physicsShape:
-      - - {x: -9, y: 19}
-        - {x: -9, y: -15}
-        - {x: -8, y: -19}
-        - {x: 3, y: -19}
-        - {x: 10, y: -8}
-        - {x: 10, y: 19}
+      physicsShape: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: Player_Spritesheet_5
+      name: Walk Left (4)
       rect:
         serializedVersion: 2
-        x: 146
-        y: 217
+        x: 140
+        y: 218
         width: 28
         height: 38
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
-      physicsShape:
-      - - {x: -2, y: 19}
-        - {x: -9, y: 16}
-        - {x: -9, y: -19}
-        - {x: 6, y: -19}
-        - {x: 10, y: -3}
-        - {x: 10, y: 14}
-        - {x: 9, y: 19}
+      physicsShape: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: Player_Spritesheet_6
+      name: Idle Right (1)
       rect:
         serializedVersion: 2
-        x: 1
-        y: 178
+        x: 0
+        y: 180
         width: 28
         height: 38
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
-      physicsShape:
-      - - {x: -8, y: 19}
-        - {x: -8, y: 18}
-        - {x: -9, y: 15}
-        - {x: -9, y: -7}
-        - {x: -6, y: -19}
-        - {x: 10, y: -19}
-        - {x: 10, y: 16}
-        - {x: 7, y: 19}
+      physicsShape: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: Player_Spritesheet_7
+      name: Idle Right (2)
       rect:
         serializedVersion: 2
-        x: 30
-        y: 178
+        x: 28
+        y: 180
         width: 28
         height: 38
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
-      physicsShape:
-      - - {x: -9, y: 19}
-        - {x: -9, y: -11}
-        - {x: -3, y: -19}
-        - {x: 10, y: -19}
-        - {x: 10, y: 19}
+      physicsShape: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: Player_Spritesheet_8
+      name: Walk Right (1)
       rect:
         serializedVersion: 2
-        x: 59
-        y: 178
+        x: 56
+        y: 180
         width: 28
         height: 38
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
-      physicsShape:
-      - - {x: 7, y: 19}
-        - {x: -8, y: 19}
-        - {x: -9, y: 18}
-        - {x: -9, y: -7}
-        - {x: -5, y: -19}
-        - {x: 11, y: -19}
-        - {x: 11, y: -7}
-        - {x: 10, y: 14}
+      physicsShape: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: Player_Spritesheet_9
+      name: Walk Right (2)
       rect:
         serializedVersion: 2
-        x: 88
-        y: 178
+        x: 84
+        y: 180
         width: 28
         height: 38
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
-      physicsShape:
-      - - {x: 6, y: 17}
-        - {x: 1, y: 19}
-        - {x: -9, y: 19}
-        - {x: -9, y: -12}
-        - {x: -8, y: -19}
-        - {x: 12, y: -19}
-        - {x: 12, y: -8}
-        - {x: 11, y: 14}
+      physicsShape: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: Player_Spritesheet_10
+      name: Walk Right (3)
       rect:
         serializedVersion: 2
-        x: 117
-        y: 178
+        x: 112
+        y: 180
         width: 28
         height: 38
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
-      physicsShape:
-      - - {x: -8, y: 19}
-        - {x: -9, y: 16}
-        - {x: -9, y: -11}
-        - {x: -2, y: -19}
-        - {x: 8, y: -19}
-        - {x: 10, y: -17}
-        - {x: 10, y: 19}
+      physicsShape: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: Player_Spritesheet_11
+      name: Walk Right (4)
       rect:
         serializedVersion: 2
-        x: 146
-        y: 178
+        x: 140
+        y: 180
         width: 28
         height: 38
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
-      physicsShape:
-      - - {x: -9, y: 19}
-        - {x: -9, y: -11}
-        - {x: -5, y: -19}
-        - {x: 10, y: -19}
-        - {x: 10, y: 16}
-        - {x: 3, y: 19}
+      physicsShape: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: Player_Spritesheet_12
+      name: Jump Left (1)
       rect:
         serializedVersion: 2
-        x: 1
-        y: 139
+        x: 0
+        y: 142
         width: 28
         height: 38
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
-      physicsShape:
-      - - {x: -4, y: 18}
-        - {x: -9, y: 17}
-        - {x: -10, y: 10}
-        - {x: -10, y: -19}
-        - {x: 9, y: -19}
-        - {x: 11, y: -9}
-        - {x: 11, y: 15}
-        - {x: 9, y: 18}
+      physicsShape: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: Player_Spritesheet_13
+      name: Fall Left (1)
       rect:
         serializedVersion: 2
-        x: 30
-        y: 139
+        x: 28
+        y: 142
         width: 28
         height: 38
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
-      physicsShape:
-      - - {x: -3, y: 17}
-        - {x: -10, y: 15}
-        - {x: -10, y: -4}
-        - {x: -8, y: -16}
-        - {x: -4, y: -19}
-        - {x: 12, y: -19}
-        - {x: 12, y: 12}
-        - {x: 10, y: 17}
+      physicsShape: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: Player_Spritesheet_14
+      name: Land Left (1)
       rect:
         serializedVersion: 2
-        x: 59
-        y: 139
+        x: 56
+        y: 142
         width: 28
         height: 38
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
-      physicsShape:
-      - - {x: 10, y: 17}
-        - {x: -5, y: 17}
-        - {x: -13, y: 12}
-        - {x: -14, y: 6}
-        - {x: -14, y: -18}
-        - {x: -12, y: -19}
-        - {x: -1, y: -19}
-        - {x: 11, y: -11}
-        - {x: 14, y: -1}
-        - {x: 14, y: 12}
+      physicsShape: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: Player_Spritesheet_15
+      name: Jump Right (1)
       rect:
         serializedVersion: 2
-        x: 1
-        y: 100
+        x: 0
+        y: 104
         width: 28
         height: 38
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
-      physicsShape:
-      - - {x: -3, y: 18}
-        - {x: -10, y: 18}
-        - {x: -10, y: -15}
-        - {x: -9, y: -19}
-        - {x: 11, y: -19}
-        - {x: 11, y: 13}
-        - {x: 8, y: 15}
+      physicsShape: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: Player_Spritesheet_16
+      name: Fall Right (2)
       rect:
         serializedVersion: 2
-        x: 30
-        y: 100
+        x: 28
+        y: 104
         width: 28
         height: 38
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
-      physicsShape:
-      - - {x: 11, y: 12}
-        - {x: 7, y: 16}
-        - {x: -2, y: 17}
-        - {x: -8, y: 17}
-        - {x: -11, y: 16}
-        - {x: -11, y: -19}
-        - {x: 5, y: -19}
-        - {x: 7, y: -15}
-        - {x: 8, y: -3}
-        - {x: 11, y: 7}
+      physicsShape: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: Player_Spritesheet_17
+      name: Land Right (3)
       rect:
         serializedVersion: 2
-        x: 59
-        y: 100
+        x: 56
+        y: 104
         width: 28
         height: 38
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
-      physicsShape:
-      - - {x: -14, y: 17}
-        - {x: -14, y: -7}
-        - {x: -6, y: -19}
-        - {x: 13, y: -19}
-        - {x: 14, y: -18}
-        - {x: 14, y: 13}
-        - {x: 10, y: 17}
+      physicsShape: []
       tessellationDetail: 0
     outline: []
     physicsShape: []

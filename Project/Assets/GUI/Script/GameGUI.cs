@@ -9,9 +9,6 @@ public class GameGUI : MonoBehaviour {
 	// -----------------------------------------------------------------------------------------------------------------
 	// Constants:
 
-	protected const float COORD_X = 0;
-	protected const float COORD_Y = 0;
-
 	protected Rect TEX_BAR_FULL = new Rect(0f, 0.5f, 0.5f, 0.5f);
 	protected Rect TEX_BAR_EMPTY = new Rect(0.5f, 0.5f, 0.5f, 0.5f);
 	protected Rect TEX_BAR_LEFT_CAP = new Rect(0f, 0f, 0.5f, 0.5f);
@@ -60,6 +57,15 @@ public class GameGUI : MonoBehaviour {
 	// -----------------------------------------------------------------------------------------------------------------
 	// GUI:
 
+	/// <summary>
+	/// Render a value bar.
+	/// </summary>
+	/// <param name="cur">Current value.</param>
+	/// <param name="max">Max value.</param>
+	/// <param name="tex">Texture.</param>
+	/// <param name="x">X coordinate.</param>
+	/// <param name="y">Y coordinate.</param>
+	/// <param name="scale">Scale.</param>
 	void RenderBar(float cur, float max, Texture2D tex, float x, float y, float scale) {
 		float sw = 8f * scale;
 		float xi = 0;
