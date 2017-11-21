@@ -99,9 +99,12 @@ public class ZombieResearcherController : MonoBehaviour, DeathBehaviour, HurtBeh
 
 	void UpdateState() {
 		if (gameObject.CanSee(player_body, SEE_DISTANCE, GroundLayers)) {
+			animator.ResetTrigger("Target Lost");
+			animator.SetTrigger("Target Acquired");
 			state = State.ATTACK;
 			updateTicks = TicksAttacking;
 		} else {
+			animator.SetTrigger("Target Lost");
 			if (UnityEngine.Random.Range(0, 2) == 1) {
 				state = State.WALK;
 				updateTicks = TicksMove;
@@ -142,7 +145,10 @@ public class ZombieResearcherController : MonoBehaviour, DeathBehaviour, HurtBeh
 		// Update.
 		Vector2 distance = anchor + new Vector2(transform.position.x, transform.position.y);
 		if (Mathf.Abs(distance.x) < WALK_DISTANCE || Mathf.Sign(moveDirection.x) != Mathf.Sign(distance.x)) {
+			animator.SetTrigger("Walk");
 			body.velocity = moveDirection;
+		} else {
+			animator.SetTrigger("Idle");
 		}
 	}
 

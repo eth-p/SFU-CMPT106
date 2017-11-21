@@ -38,7 +38,6 @@ static public class TargetingHelper {
 			}
 
 			if (hit.rigidbody != null && hit.rigidbody == target) {
-				Debug.Log("FOUND");
 				return true; // Found them!
 			}
 		}
