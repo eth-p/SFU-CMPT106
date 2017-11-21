@@ -62,9 +62,6 @@ public class ZombieResearcherController : MonoBehaviour, DeathBehaviour, HurtBeh
 		anchor = transform.position;
 	}
 
-	void Update() {
-	}
-
 	void FixedUpdate() {
 		if (--updateTicks < 0) {
 			UpdateState();
@@ -103,7 +100,6 @@ public class ZombieResearcherController : MonoBehaviour, DeathBehaviour, HurtBeh
 	void UpdateState() {
 		if (gameObject.CanSee(player_body, SEE_DISTANCE, GroundLayers)) {
 			state = State.ATTACK;
-			player_pos = player_body.position;
 			updateTicks = TicksAttacking;
 		} else {
 			if (UnityEngine.Random.Range(0, 2) == 1) {
