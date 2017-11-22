@@ -12,7 +12,8 @@ public class PlayerController : MonoBehaviour, DeathBehaviour, HurtBehaviour, Ca
 	// -----------------------------------------------------------------------------------------------------------------
 	// Configurable:
 
-	public LayerMask[] GroundLayers = { };
+	public LayerMask[] GroundLayers = {};
+	public LayerMask[] EnemyLayers = {};
 	public int Jumps = 1;
 
 
@@ -48,6 +49,7 @@ public class PlayerController : MonoBehaviour, DeathBehaviour, HurtBehaviour, Ca
 	}
 
 	void Update() {
+		if (Physics2D.GetIgnoreLayerCollision(gameObject.layer, LayerMask.NameToLayer("Entity"))) Debug.Log("IGNORE");
 		ApplyAnimation();
 	}
 
@@ -65,7 +67,19 @@ public class PlayerController : MonoBehaviour, DeathBehaviour, HurtBehaviour, Ca
 	}
 
 	public void OnHurt(float amount) {
+		foreach (LayerMask layer in EnemyLayers) {
+			Physics2D.IgnoreLayerCollision(gameObject.layer, layer.value, true);
+		}
+		
 		Debug.Log("You took " + amount + " damage.");
+	}
+
+	public void OnVulnerable() {
+		foreach (LayerMask layer in EnemyLayers) {
+			Physics2D.IgnoreLayerCollision(gameObject.layer, layer.value, false);
+		}
+		
+		Debug.Log("Vulnerable");
 	}
 
 
@@ -99,9 +113,6 @@ public class PlayerController : MonoBehaviour, DeathBehaviour, HurtBehaviour, Ca
 	// -----------------------------------------------------------------------------------------------------------------
 	// API:
 
-	/// <summary>
-	/// 
-	/// </summary>
 	public void FaceLeft() {
 		if (facingLeft) return;
 

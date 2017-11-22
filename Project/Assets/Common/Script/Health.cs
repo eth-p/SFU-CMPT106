@@ -103,9 +103,7 @@ public class Health : MonoBehaviour {
 				Mathf.Sign(pb.center.x - ab.center.x) * knockback,
 				1f * knockback
 			);
-
-			Debug.Log(ab.center.x - pb.center.x);
-			Debug.Log(kbvec);
+			
 			if ((int) Mathf.Sign(body.velocity.x) == (int) Mathf.Sign(kbvec.x)) {
 				body.velocity += kbvec;
 			} else {
@@ -145,7 +143,12 @@ public class Health : MonoBehaviour {
 
 	public void FixedUpdate() {
 		if (invincibility > 0) {
-			invincibility--;
+			if (--invincibility < 1) {
+				// Run "OnVulnerable" handlers.
+				foreach (HurtBehaviour handler in on_hurt) {
+					handler.OnVulnerable();
+				}
+			}
 		}
 	}
 }
