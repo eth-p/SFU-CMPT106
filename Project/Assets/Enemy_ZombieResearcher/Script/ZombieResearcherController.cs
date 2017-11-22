@@ -15,7 +15,7 @@ public class ZombieResearcherController : MonoBehaviour, DeathBehaviour, HurtBeh
 	// -----------------------------------------------------------------------------------------------------------------
 	// Configurable:
 
-	public LayerMask[] GroundLayers = { };
+	public LayerMask GroundLayers;
 	public int TicksIdle = 60;
 	public int TicksMove = 60;
 	public int TicksAttacking = 180;

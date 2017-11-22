@@ -13,7 +13,7 @@ public class ContactAttack : MonoBehaviour {
 	public float Damage = 0.5f;
 	public float Knockback = 1f;
 
-	public LayerMask IgnoreLayers;
+	public LayerMask AffectLayers;
 
 	// -----------------------------------------------------------------------------------------------------------------
 	// Internal:
@@ -28,9 +28,9 @@ public class ContactAttack : MonoBehaviour {
 	}
 
 	void OnCollisionEnter2D(Collision2D collision) {
-		// Check if layer ignored.
-		if (IgnoreLayers.Contains(collision.gameObject.layer)) {
-			return; // Ignored.
+		// Check if it affects the layer of the collided object.
+		if (!AffectLayers.Contains(collision.gameObject.layer)) {
+			return;
 		}
 		
 		// Get collided entity health component.

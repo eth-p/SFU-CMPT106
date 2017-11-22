@@ -120,7 +120,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   GroundLayers:
-  - serializedVersion: 2
+    serializedVersion: 2
     m_Bits: 256
   TicksIdle: 60
   TicksMove: 60
@@ -137,7 +137,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Maximum: 2
-  Iframes: 5
+  Iframes: 20
 --- !u!114 &114907963752753330
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -151,9 +151,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Damage: 1
   Knockback: 15
-  IgnoreLayers:
+  AffectLayers:
     serializedVersion: 2
-    m_Bits: 512
+    m_Bits: 1024
 --- !u!212 &212107204783712454
 SpriteRenderer:
   m_ObjectHideFlags: 1
