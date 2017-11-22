@@ -330,10 +330,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   GroundLayers:
-  - serializedVersion: 2
+    serializedVersion: 2
     m_Bits: 256
   EnemyLayers:
-  - serializedVersion: 2
+    serializedVersion: 2
     m_Bits: 512
   Jumps: 1
 --- !u!114 &114398991471739262

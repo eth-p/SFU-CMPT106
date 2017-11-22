@@ -91,7 +91,11 @@ public class ZombieResearcherController : MonoBehaviour, DeathBehaviour, HurtBeh
 	}
 
 	public void OnHurt(float amount) {
-		animator.SetTrigger("Hurt");
+		animator.SetBool("Hurt", true);
+	}
+
+	public void OnVulnerable() {
+		animator.SetBool("Hurt", false);
 	}
 
 	// -----------------------------------------------------------------------------------------------------------------

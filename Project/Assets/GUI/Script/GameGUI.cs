@@ -78,7 +78,6 @@ public class GameGUI : MonoBehaviour {
 			} else if (parts <= 0) {
 				GUI.DrawTextureWithTexCoords(new Rect(x + xi, y, sw, sw), tex, TEX_BAR_EMPTY);
 			} else {
-				Debug.Log(parts);
 				GUI.DrawTextureWithTexCoords(new Rect(x + xi, y, sw * parts, sw), tex, TEX_BAR_FULL);
 				GUI.DrawTextureWithTexCoords(new Rect(x + xi + (sw * parts), y, sw * (1f - parts), sw), tex, TEX_BAR_EMPTY);
 			}
