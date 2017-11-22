@@ -3,7 +3,7 @@
 /// <summary>
 /// Heal an entity on contact.
 /// </summary>
-public class HealthPickupBehaviour : MonoBehaviour {
+public class HealthPickupController : MonoBehaviour {
 	// -----------------------------------------------------------------------------------------------------------------
 	// Configurable:
 

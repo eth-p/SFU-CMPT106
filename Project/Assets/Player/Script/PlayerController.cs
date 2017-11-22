@@ -12,6 +12,8 @@ public class PlayerController : MonoBehaviour, DeathBehaviour, HurtBehaviour, Ca
 	// -----------------------------------------------------------------------------------------------------------------
 	// Configurable:
 
+	public GameObject GunProjectile;
+	public int GunCooldown = 30;
 	public LayerMask GroundLayers;
 	public LayerMask EnemyLayers;
 	public int Jumps = 1;
@@ -36,9 +38,12 @@ public class PlayerController : MonoBehaviour, DeathBehaviour, HurtBehaviour, Ca
 
 	private ArmRotate armRotate;
 
+	private int shootCooldown = 0;
+
 
 	// -----------------------------------------------------------------------------------------------------------------
 	// Unity:
+
 	void Start() {
 		body = GetComponent<Rigidbody2D>();
 		body.drag = 10;
@@ -60,6 +65,16 @@ public class PlayerController : MonoBehaviour, DeathBehaviour, HurtBehaviour, Ca
 	void FixedUpdate() {
 		CheckGrounded();
 		ApplyMovement();
+
+		// Shoot.
+		if (shootCooldown > 0) {
+			shootCooldown--;
+		} else {
+			if (Input.GetAxis("Shoot") > 0.1) {
+				shootCooldown = GunCooldown;
+				Shoot();
+			}
+		}
 	}
 
 
@@ -216,7 +231,7 @@ public class PlayerController : MonoBehaviour, DeathBehaviour, HurtBehaviour, Ca
 
 		// Cast rays to check if standing on ground.
 		foreach (var ray in rays) {
-			if (Physics2D.Raycast(ray, Vector2.down, 0.1f, GroundLayers)) {
+			if (Physics2D.Raycast(ray, Vector2.down, 0.1f, GroundLayers).collider != null) {
 				falling = false;
 				jumping = false;
 				jumpsRemaining = Jumps;
@@ -228,5 +243,25 @@ public class PlayerController : MonoBehaviour, DeathBehaviour, HurtBehaviour, Ca
 			falling = true;
 			fallingLastY = body.position.y;
 		}
+	}
+
+	/// <summary>
+	/// Shoot a bullet.
+	/// </summary>
+	void Shoot() {
+		if (GunProjectile == null) {
+			return;
+		}
+		
+		// Get angle.
+		float angle = AngleHelper.RadiansBetween(transform.position, Camera.main.ScreenToWorldPoint(new Vector3(
+			Input.mousePosition.x,
+			Input.mousePosition.y,
+			10
+		)));
+		
+		// Spawn projectile.
+		Debug.Log(angle * Mathf.Rad2Deg);
+		Instantiate(GunProjectile, transform.position, Quaternion.Euler(0, 0, angle * Mathf.Rad2Deg));
 	}
 }

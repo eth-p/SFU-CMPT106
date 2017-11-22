@@ -31,20 +31,16 @@ public class ArmRotate : MonoBehaviour {
 	/// Rotate the arm based on the angle between the cursor and the 
 	/// </summary>
 	void ApplyRotation() {
-		// Convert mouse to screen point.
-		Vector3 point;
-		Vector3 cursor = Input.mousePosition;
-		cursor.z = 10;
-		point = Camera.main.ScreenToWorldPoint(cursor);
-
 		// Calculate angle.
-		float angle = Mathf.Rad2Deg * Mathf.Atan2(
-			              transform.position.x - point.x,
-			              point.y - transform.position.y
-		              );
+		float angle = AngleHelper.RadiansBetween(Camera.main.ScreenToWorldPoint(new Vector3(
+			Input.mousePosition.x,
+			Input.mousePosition.y,
+			10
+		)), player.transform.position);
+		
 
 		// Apply rotation.
-		Quaternion rotation = Quaternion.AngleAxis(angle, Vector3.forward);
+		Quaternion rotation = Quaternion.Euler(new Vector3(0f, 0f, angle * Mathf.Rad2Deg + 90f));
 		if (ROTATION_SPEED > 0) {
 			transform.rotation = Quaternion.Slerp(transform.rotation, rotation, ROTATION_SPEED * Time.deltaTime);
 		} else {

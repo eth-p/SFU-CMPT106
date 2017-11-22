@@ -22,7 +22,7 @@ static public class TargetingHelper {
 
 		// Calculate ray direction.
 		float angle = AngleHelper.RadiansBetween(self.transform.position, target.position);
-		Vector2 direction = new Vector2(Mathf.Sin(angle), Mathf.Cos(angle));
+		Vector2 direction = new Vector2(Mathf.Cos(angle), Mathf.Sin(angle));
 
 		// DEBUG: Draw Rays
 		if (DebugSettings.RAYCAST_LOS) {

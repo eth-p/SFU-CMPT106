@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
 /// <summary>
 /// Damage an entity on contact.
@@ -21,6 +18,18 @@ public class ContactAttack : MonoBehaviour {
 	private Collider2D col;
 	
 	// -----------------------------------------------------------------------------------------------------------------
+	// API:
+
+	/// <summary>
+	/// Check if the attack affects an object.
+	/// </summary>
+	/// <param name="obj">The object.</param>
+	/// <returns>True if the attack affects it, false otherwise.</returns>
+	bool Affects(GameObject obj) {
+		return AffectLayers.Contains(obj.layer);
+	}
+	
+	// -----------------------------------------------------------------------------------------------------------------
 	// Unity:
 
 	void Start() {
@@ -29,7 +38,7 @@ public class ContactAttack : MonoBehaviour {
 
 	void OnCollisionEnter2D(Collision2D collision) {
 		// Check if it affects the layer of the collided object.
-		if (!AffectLayers.Contains(collision.gameObject.layer)) {
+		if (!Affects(collision.gameObject)) {
 			return;
 		}
 		
@@ -40,6 +49,7 @@ public class ContactAttack : MonoBehaviour {
 		}
 
 		if (Knockback > 0f) {
+			Debug.Log("KB");
 			health.DamageWithKnockback(Damage, col, Knockback);
 		} else {
 			health.Damage(Damage);

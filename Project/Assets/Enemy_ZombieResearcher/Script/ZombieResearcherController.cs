@@ -88,6 +88,9 @@ public class ZombieResearcherController : MonoBehaviour, DeathBehaviour, HurtBeh
 
 	public void OnDeath() {
 		animator.SetTrigger("Death");
+		
+		//
+		gameObject.SetActive(false);
 	}
 
 	public void OnHurt(float amount) {
