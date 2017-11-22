@@ -12,13 +12,16 @@ public class PlayerController : MonoBehaviour, DeathBehaviour, HurtBehaviour, Ca
 	// -----------------------------------------------------------------------------------------------------------------
 	// Configurable:
 
-	public LayerMask[] GroundLayers = {};
-	public LayerMask[] EnemyLayers = {};
+	public LayerMask[] GroundLayers = { };
+	public LayerMask[] EnemyLayers = { };
 	public int Jumps = 1;
 
 
 	// -----------------------------------------------------------------------------------------------------------------
 	// Internal:
+
+	private LayerMask cache_GroundLayers;
+	private int[] cache_EnemyLayers;
 
 	private int jumpsRemaining;
 	private bool jumping;
@@ -46,10 +49,13 @@ public class PlayerController : MonoBehaviour, DeathBehaviour, HurtBehaviour, Ca
 		col = GetComponent<Collider2D>();
 
 		armRotate = GetComponentInChildren<ArmRotate>();
+
+		// Set up layer caches.
+		cache_GroundLayers = GroundLayers.Merge();
+		cache_EnemyLayers = EnemyLayers.Merge().ToLayers();
 	}
 
 	void Update() {
-		if (Physics2D.GetIgnoreLayerCollision(gameObject.layer, LayerMask.NameToLayer("Entity"))) Debug.Log("IGNORE");
 		ApplyAnimation();
 	}
 
@@ -67,18 +73,18 @@ public class PlayerController : MonoBehaviour, DeathBehaviour, HurtBehaviour, Ca
 	}
 
 	public void OnHurt(float amount) {
-		foreach (LayerMask layer in EnemyLayers) {
-			Physics2D.IgnoreLayerCollision(gameObject.layer, layer.value, true);
+		foreach (int layer in cache_EnemyLayers) {
+			Physics2D.IgnoreLayerCollision(gameObject.layer, layer, true);
 		}
-		
+
 		Debug.Log("You took " + amount + " damage.");
 	}
 
 	public void OnVulnerable() {
-		foreach (LayerMask layer in EnemyLayers) {
-			Physics2D.IgnoreLayerCollision(gameObject.layer, layer.value, false);
+		foreach (int layer in cache_EnemyLayers) {
+			Physics2D.IgnoreLayerCollision(gameObject.layer, layer, false);
 		}
-		
+
 		Debug.Log("Vulnerable");
 	}
 
@@ -87,7 +93,7 @@ public class PlayerController : MonoBehaviour, DeathBehaviour, HurtBehaviour, Ca
 	// Implement: CameraManipulator
 
 	private Vector2 cam_manip;
-	
+
 	/// <summary>
 	/// Manipulate the camera to move closer towards where the cursor is pointing.
 	/// </summary>
@@ -97,14 +103,14 @@ public class PlayerController : MonoBehaviour, DeathBehaviour, HurtBehaviour, Ca
 		// Calculate offsets.
 		float mx = (cursor.x - (Screen.width / 2f)) / Screen.width;
 		float my = (cursor.y - (Screen.height / 2f)) / Screen.height;
-		
+
 		// Clamp and modify offsets.
 		mx = Mathf.Clamp(mx, -0.5f, 0.5f) * 2.5f;
 		my = Mathf.Clamp(my, -0.5f, 0.5f) * 1f;
-		
+
 		// Dampen.
 		cam_manip = Vector2.Lerp(cam_manip, new Vector2(mx, my), Time.deltaTime * 2f);
-		
+
 		// Update camera.
 		pos += cam_manip;
 	}
@@ -212,13 +218,11 @@ public class PlayerController : MonoBehaviour, DeathBehaviour, HurtBehaviour, Ca
 
 		// Cast rays to check if standing on ground.
 		foreach (var ray in rays) {
-			foreach (var mask in GroundLayers) {
-				if (Physics2D.Raycast(ray, Vector2.down, 0.1f, mask.value)) {
-					falling = false;
-					jumping = false;
-					jumpsRemaining = Jumps;
-					return;
-				}
+			if (Physics2D.Raycast(ray, Vector2.down, 0.1f, cache_GroundLayers)) {
+				falling = false;
+				jumping = false;
+				jumpsRemaining = Jumps;
+				return;
 			}
 		}
 
