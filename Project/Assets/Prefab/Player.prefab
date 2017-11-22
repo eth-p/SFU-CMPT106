@@ -25,7 +25,7 @@ GameObject:
   - component: {fileID: 95983211580105190}
   - component: {fileID: 114398991471739262}
   - component: {fileID: 114337804090521028}
-  m_Layer: 9
+  m_Layer: 10
   m_Name: Player
   m_TagString: Player
   m_Icon: {fileID: 0}
@@ -41,7 +41,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4151785006436432}
   - component: {fileID: 108338035328234344}
-  m_Layer: 9
+  m_Layer: 10
   m_Name: 'Light: Glow'
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -58,7 +58,7 @@ GameObject:
   - component: {fileID: 4915300862314842}
   - component: {fileID: 108001427434102394}
   - component: {fileID: 114828944405672100}
-  m_Layer: 9
+  m_Layer: 10
   m_Name: 'Light: Flashlight'
   m_TagString: Player
   m_Icon: {fileID: 0}
@@ -75,7 +75,7 @@ GameObject:
   - component: {fileID: 4969869238330940}
   - component: {fileID: 212357218695353192}
   - component: {fileID: 95519265011457426}
-  m_Layer: 9
+  m_Layer: 10
   m_Name: Arm
   m_TagString: Player
   m_Icon: {fileID: 0}
@@ -91,7 +91,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4027472391362890}
   - component: {fileID: 114464655090915390}
-  m_Layer: 9
+  m_Layer: 10
   m_Name: Arm (Rotation)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -132,7 +132,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1209876083107346}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -1.7504193, y: -2.8911867, z: 0}
+  m_LocalPosition: {x: -3.63, y: -0.85, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 4151785006436432}
@@ -185,7 +185,7 @@ Rigidbody2D:
   m_Material: {fileID: 0}
   m_Interpolate: 0
   m_SleepingMode: 1
-  m_CollisionDetection: 0
+  m_CollisionDetection: 1
   m_Constraints: 4
 --- !u!61 &61426266176637376
 BoxCollider2D:
@@ -332,6 +332,9 @@ MonoBehaviour:
   GroundLayers:
   - serializedVersion: 2
     m_Bits: 256
+  EnemyLayers:
+  - serializedVersion: 2
+    m_Bits: 512
   Jumps: 1
 --- !u!114 &114398991471739262
 MonoBehaviour:
@@ -345,7 +348,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Maximum: 10
-  Iframes: 10
+  Iframes: 20
 --- !u!114 &114464655090915390
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -400,7 +403,7 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: -462913625
-  m_SortingLayer: 2
+  m_SortingLayer: 4
   m_SortingOrder: 0
   m_Sprite: {fileID: 21300048, guid: 9fceafe2956504f69bcd5b139e94935a, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -444,7 +447,7 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: -1056422523
-  m_SortingLayer: 1
+  m_SortingLayer: 3
   m_SortingOrder: 0
   m_Sprite: {fileID: 21300000, guid: 6cd215a9e4dbb490f959709e032a2a5b, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}

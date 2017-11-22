@@ -4,17 +4,20 @@ using System.Collections.Generic;
 using UnityEngine;
 
 /// <summary>
-/// Damage the player on contact.
+/// Damage an entity on contact.
 /// </summary>
 public class ContactAttack : MonoBehaviour {
 	// -----------------------------------------------------------------------------------------------------------------
 	// Configurable:
 
-	public float DAMAGE = 0.5f;
-	public float KNOCKBACK = 1f;
+	public float Damage = 0.5f;
+	public float Knockback = 1f;
+
+	public LayerMask IgnoreLayers;
 
 	// -----------------------------------------------------------------------------------------------------------------
 	// Internal:
+	
 	private Collider2D col;
 	
 	// -----------------------------------------------------------------------------------------------------------------
@@ -25,15 +28,22 @@ public class ContactAttack : MonoBehaviour {
 	}
 
 	void OnCollisionEnter2D(Collision2D collision) {
-		Health health = collision.collider.gameObject.GetComponent<Health>();
+		// Check if layer ignored.
+		if (IgnoreLayers.Contains(collision.gameObject.layer)) {
+			return; // Ignored.
+		}
+		
+		// Get collided entity health component.
+		Health health = collision.gameObject.GetComponent<Health>();
 		if (health == null) {
-			return;
+			return; // Not attackable.
 		}
 
-		if (KNOCKBACK > 0f) {
-			health.DamageWithKnockback(DAMAGE, col, KNOCKBACK);
+		if (Knockback > 0f) {
+			health.DamageWithKnockback(Damage, col, Knockback);
 		} else {
-			health.Damage(DAMAGE);
+			health.Damage(Damage);
 		}
 	}
+
 }

@@ -12,15 +12,14 @@ public class PlayerController : MonoBehaviour, DeathBehaviour, HurtBehaviour, Ca
 	// -----------------------------------------------------------------------------------------------------------------
 	// Configurable:
 
-	public LayerMask[] GroundLayers = { };
-	public LayerMask[] EnemyLayers = { };
+	public LayerMask GroundLayers;
+	public LayerMask EnemyLayers;
 	public int Jumps = 1;
 
 
 	// -----------------------------------------------------------------------------------------------------------------
 	// Internal:
 
-	private LayerMask cache_GroundLayers;
 	private int[] cache_EnemyLayers;
 
 	private int jumpsRemaining;
@@ -51,8 +50,7 @@ public class PlayerController : MonoBehaviour, DeathBehaviour, HurtBehaviour, Ca
 		armRotate = GetComponentInChildren<ArmRotate>();
 
 		// Set up layer caches.
-		cache_GroundLayers = GroundLayers.Merge();
-		cache_EnemyLayers = EnemyLayers.Merge().ToLayers();
+		cache_EnemyLayers = EnemyLayers.ToLayers();
 	}
 
 	void Update() {
@@ -218,7 +216,7 @@ public class PlayerController : MonoBehaviour, DeathBehaviour, HurtBehaviour, Ca
 
 		// Cast rays to check if standing on ground.
 		foreach (var ray in rays) {
-			if (Physics2D.Raycast(ray, Vector2.down, 0.1f, cache_GroundLayers)) {
+			if (Physics2D.Raycast(ray, Vector2.down, 0.1f, GroundLayers)) {
 				falling = false;
 				jumping = false;
 				jumpsRemaining = Jumps;
