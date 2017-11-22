@@ -139,6 +139,7 @@ public class Health : MonoBehaviour {
 		on_hurt = this.GetInterfaces<HurtBehaviour>();
 		body = GetComponent<Rigidbody2D>();
 		col = GetComponent<Collider2D>();
+		Value = Maximum;
 	}
 
 	public void FixedUpdate() {

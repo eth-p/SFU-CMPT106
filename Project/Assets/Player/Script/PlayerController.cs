@@ -75,7 +75,7 @@ public class PlayerController : MonoBehaviour, DeathBehaviour, HurtBehaviour, Ca
 			Physics2D.IgnoreLayerCollision(gameObject.layer, layer, true);
 		}
 
-		Debug.Log("You took " + amount + " damage.");
+		Debug.Log("You took " + amount + " damage. You're at " + health.Value + " health.");
 	}
 
 	public void OnVulnerable() {

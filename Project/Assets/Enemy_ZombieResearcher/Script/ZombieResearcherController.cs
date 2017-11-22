@@ -102,13 +102,12 @@ public class ZombieResearcherController : MonoBehaviour, DeathBehaviour, HurtBeh
 	// Enemy_ZombieResearcher:
 
 	void UpdateState() {
-		if (gameObject.CanSee(player_body, SEE_DISTANCE, GroundLayers)) {
-			animator.ResetTrigger("Target Lost");
-			animator.SetTrigger("Target Acquired");
+		bool los = gameObject.CanSee(player_body, SEE_DISTANCE, GroundLayers);
+		animator.SetBool("Attacking", true);
+		if (los) {
 			state = State.ATTACK;
 			updateTicks = TicksAttacking;
 		} else {
-			animator.SetTrigger("Target Lost");
 			if (UnityEngine.Random.Range(0, 2) == 1) {
 				state = State.WALK;
 				updateTicks = TicksMove;
