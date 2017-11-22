@@ -3,7 +3,7 @@
 /// <summary>
 /// Controller for a bullet projectile.
 /// </summary>
-public class BulletController : ProjectileController {
+public class BulletProjectile : AbstractProjectile {
 	// -----------------------------------------------------------------------------------------------------------------
 	// Configurable:
 

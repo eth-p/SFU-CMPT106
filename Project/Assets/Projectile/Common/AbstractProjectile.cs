@@ -1,26 +1,47 @@
 ﻿using UnityEngine;
 
 /// <summary>
-/// Controller for a projectile.
+/// An abstract base for projectiles.
 /// 
-/// This will need to be extended into something useful.
+/// This abstracts away collision and movement.
 /// </summary>
-public abstract class ProjectileController : MonoBehaviour {
+public abstract class AbstractProjectile : MonoBehaviour {
 	// -----------------------------------------------------------------------------------------------------------------
 	// Configurable:
 
+	/// <summary>
+	/// The speed of the projectile.
+	/// </summary>
 	public float Speed = 2f;
+	
+	/// <summary>
+	/// The number of ticks before the projectile despawns.
+	/// </summary>
 	public int Despawn = 120;
 
+	/// <summary>
+	/// The layers which will trigger a collision.
+	/// </summary>
 	public LayerMask CollideLayers;
 	
 	
 	// -----------------------------------------------------------------------------------------------------------------
-	// Internal:
+	// Variables:
 
 	private float angle;
 	private Vector2 angle_vec;
 	private int despawnIn;
+	
+	
+	// -----------------------------------------------------------------------------------------------------------------
+	// Abstract:
+	
+	/// <summary>
+	/// The method called when projectile collides with something.
+	/// </summary>
+	/// <param name="obj">The collider of object collided with.</param>
+	public abstract void OnCollide(Collider2D col);
+
 	
 	// -----------------------------------------------------------------------------------------------------------------
 	// ProjectileController:
@@ -43,14 +64,17 @@ public abstract class ProjectileController : MonoBehaviour {
 		transform.position = ((Vector2) transform.position) + (angle_vec * Speed);
 	}
 	
-	// -----------------------------------------------------------------------------------------------------------------
-	// Unity:
-
+	/// <summary>
+	/// [UNITY] Called when the object is instantiated.
+	/// </summary>
 	void Start() {
 		despawnIn = Despawn;
 		RecalculateAngle();
 	}
 	
+	/// <summary>
+	/// [UNITY] Called every tick.
+	/// </summary>
 	void FixedUpdate() {
 		if (--despawnIn < 1) {
 			gameObject.SetActive(false);
@@ -71,13 +95,4 @@ public abstract class ProjectileController : MonoBehaviour {
 		}
 	}
 	
-	// -----------------------------------------------------------------------------------------------------------------
-	// Abstract:
-	
-	/// <summary>
-	/// Called when the projectile collides with something.
-	/// </summary>
-	/// <param name="obj">The collider of the "something".</param>
-	public abstract void OnCollide(Collider2D col);
-
 }

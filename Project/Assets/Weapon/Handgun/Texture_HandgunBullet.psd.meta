@@ -1,10 +1,11 @@
 fileFormatVersion: 2
 guid: 6e69cb2c2d80447fba2f252c29e1db93
-timeCreated: 1511330081
+timeCreated: 1511381099
 licenseType: Free
 TextureImporter:
   fileIDToRecycleName:
     21300000: Bullet
+    21300002: Handgun Bullet (Normal)
   externalObjects: {}
   serializedVersion: 4
   mipmaps:
@@ -96,8 +97,22 @@ TextureImporter:
         width: 8
         height: 8
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 2, y: 4, z: 2, w: 3}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: Handgun Bullet (Normal)
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 8
+        width: 8
+        height: 8
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0

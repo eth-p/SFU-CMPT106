@@ -35,6 +35,7 @@ public abstract class AbstractWeapon : MonoBehaviour {
 	/// </summary>
 	public bool Manual = false;
 
+	
 	// -----------------------------------------------------------------------------------------------------------------
 	// Enum:
 
@@ -126,6 +127,7 @@ public abstract class AbstractWeapon : MonoBehaviour {
 		}
 	}
 
+	
 	// -----------------------------------------------------------------------------------------------------------------
 	// API:
 
