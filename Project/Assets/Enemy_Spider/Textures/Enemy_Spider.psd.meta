@@ -1,14 +1,13 @@
 fileFormatVersion: 2
-guid: 19456b00c9b0a4066953006306532753
-timeCreated: 1510784252
+guid: 7f601293230dd450f8c3913fb91fe05c
+timeCreated: 1511314886
 licenseType: Free
 TextureImporter:
   fileIDToRecycleName:
-    21300000: Idle (1)
-    21300002: Idle (2)
-    21300004: Walk (1)
-    21300006: Walk (2)
-    21300008: Walk (3)
+    21300000: Walk 1
+    21300002: Walk 2
+    21300004: Jump 1
+    21300006: Jump 2
   externalObjects: {}
   serializedVersion: 4
   mipmaps:
@@ -46,7 +45,7 @@ TextureImporter:
   lightmap: 0
   compressionQuality: 50
   spriteMode: 2
-  spriteExtrude: 0
+  spriteExtrude: 1
   spriteMeshType: 0
   alignment: 0
   spritePivot: {x: 0.5, y: 0.5}
@@ -62,7 +61,7 @@ TextureImporter:
   textureFormatSet: 0
   platformSettings:
   - buildTarget: DefaultTexturePlatform
-    maxTextureSize: 128
+    maxTextureSize: 2048
     resizeAlgorithm: 0
     textureFormat: -1
     textureCompression: 0
@@ -71,7 +70,7 @@ TextureImporter:
     allowsAlphaSplitting: 0
     overridden: 0
   - buildTarget: Standalone
-    maxTextureSize: 128
+    maxTextureSize: 2048
     resizeAlgorithm: 0
     textureFormat: -1
     textureCompression: 0
@@ -80,7 +79,7 @@ TextureImporter:
     allowsAlphaSplitting: 0
     overridden: 0
   - buildTarget: WebGL
-    maxTextureSize: 128
+    maxTextureSize: 2048
     resizeAlgorithm: 0
     textureFormat: -1
     textureCompression: 0
@@ -92,13 +91,13 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: Idle (1)
+      name: Walk 1
       rect:
         serializedVersion: 2
         x: 0
-        y: 90
-        width: 28
-        height: 38
+        y: 54
+        width: 15
+        height: 10
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -106,13 +105,13 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: Idle (2)
+      name: Walk 2
       rect:
         serializedVersion: 2
-        x: 28
-        y: 90
-        width: 28
-        height: 38
+        x: 15
+        y: 54
+        width: 15
+        height: 10
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -120,13 +119,13 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: Walk (1)
+      name: Jump 1
       rect:
         serializedVersion: 2
-        x: 0
-        y: 52
-        width: 28
-        height: 38
+        x: 30
+        y: 54
+        width: 15
+        height: 10
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -134,29 +133,15 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: Walk (2)
+      name: Jump 2
       rect:
         serializedVersion: 2
-        x: 28
-        y: 52
-        width: 28
-        height: 38
+        x: 45
+        y: 54
+        width: 15
+        height: 10
       alignment: 0
-      pivot: {x: 0.5, y: 0.5}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-    - serializedVersion: 2
-      name: Walk (3)
-      rect:
-        serializedVersion: 2
-        x: 56
-        y: 52
-        width: 28
-        height: 38
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []

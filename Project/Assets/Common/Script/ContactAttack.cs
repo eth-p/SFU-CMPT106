@@ -1,21 +1,33 @@
-﻿using System;
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
 /// <summary>
-/// Damage the player on contact.
+/// Damage an entity on contact.
 /// </summary>
 public class ContactAttack : MonoBehaviour {
 	// -----------------------------------------------------------------------------------------------------------------
 	// Configurable:
 
-	public float DAMAGE = 0.5f;
-	public float KNOCKBACK = 1f;
+	public float Damage = 0.5f;
+	public float Knockback = 1f;
+
+	public LayerMask AffectLayers;
 
 	// -----------------------------------------------------------------------------------------------------------------
 	// Internal:
+	
 	private Collider2D col;
+	
+	// -----------------------------------------------------------------------------------------------------------------
+	// API:
+
+	/// <summary>
+	/// Check if the attack affects an object.
+	/// </summary>
+	/// <param name="obj">The object.</param>
+	/// <returns>True if the attack affects it, false otherwise.</returns>
+	bool Affects(GameObject obj) {
+		return AffectLayers.Contains(obj.layer);
+	}
 	
 	// -----------------------------------------------------------------------------------------------------------------
 	// Unity:
@@ -25,15 +37,23 @@ public class ContactAttack : MonoBehaviour {
 	}
 
 	void OnCollisionEnter2D(Collision2D collision) {
-		Health health = collision.collider.gameObject.GetComponent<Health>();
-		if (health == null) {
+		// Check if it affects the layer of the collided object.
+		if (!Affects(collision.gameObject)) {
 			return;
 		}
+		
+		// Get collided entity health component.
+		Health health = collision.gameObject.GetComponent<Health>();
+		if (health == null) {
+			return; // Not attackable.
+		}
 
-		if (KNOCKBACK > 0f) {
-			health.DamageWithKnockback(DAMAGE, col, KNOCKBACK);
+		if (Knockback > 0f) {
+			Debug.Log("KB");
+			health.DamageWithKnockback(Damage, col, Knockback);
 		} else {
-			health.Damage(DAMAGE);
+			health.Damage(Damage);
 		}
 	}
+
 }

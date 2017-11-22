@@ -12,12 +12,17 @@ public class PlayerController : MonoBehaviour, DeathBehaviour, HurtBehaviour, Ca
 	// -----------------------------------------------------------------------------------------------------------------
 	// Configurable:
 
-	public LayerMask[] GroundLayers = { };
+	public GameObject GunProjectile;
+	public int GunCooldown = 30;
+	public LayerMask GroundLayers;
+	public LayerMask EnemyLayers;
 	public int Jumps = 1;
 
 
 	// -----------------------------------------------------------------------------------------------------------------
 	// Internal:
+
+	private int[] cache_EnemyLayers;
 
 	private int jumpsRemaining;
 	private bool jumping;
@@ -33,9 +38,12 @@ public class PlayerController : MonoBehaviour, DeathBehaviour, HurtBehaviour, Ca
 
 	private ArmRotate armRotate;
 
+	private int shootCooldown = 0;
+
 
 	// -----------------------------------------------------------------------------------------------------------------
 	// Unity:
+
 	void Start() {
 		body = GetComponent<Rigidbody2D>();
 		body.drag = 10;
@@ -45,6 +53,9 @@ public class PlayerController : MonoBehaviour, DeathBehaviour, HurtBehaviour, Ca
 		col = GetComponent<Collider2D>();
 
 		armRotate = GetComponentInChildren<ArmRotate>();
+
+		// Set up layer caches.
+		cache_EnemyLayers = EnemyLayers.ToLayers();
 	}
 
 	void Update() {
@@ -54,6 +65,16 @@ public class PlayerController : MonoBehaviour, DeathBehaviour, HurtBehaviour, Ca
 	void FixedUpdate() {
 		CheckGrounded();
 		ApplyMovement();
+
+		// Shoot.
+		if (shootCooldown > 0) {
+			shootCooldown--;
+		} else {
+			if (Input.GetAxis("Shoot") > 0.1) {
+				shootCooldown = GunCooldown;
+				Shoot();
+			}
+		}
 	}
 
 
@@ -65,7 +86,19 @@ public class PlayerController : MonoBehaviour, DeathBehaviour, HurtBehaviour, Ca
 	}
 
 	public void OnHurt(float amount) {
-		Debug.Log("You took " + amount + " damage.");
+		foreach (int layer in cache_EnemyLayers) {
+			Physics2D.IgnoreLayerCollision(gameObject.layer, layer, true);
+		}
+
+		Debug.Log("You took " + amount + " damage. You're at " + health.Value + " health.");
+	}
+
+	public void OnVulnerable() {
+		foreach (int layer in cache_EnemyLayers) {
+			Physics2D.IgnoreLayerCollision(gameObject.layer, layer, false);
+		}
+
+		Debug.Log("Vulnerable");
 	}
 
 
@@ -73,7 +106,7 @@ public class PlayerController : MonoBehaviour, DeathBehaviour, HurtBehaviour, Ca
 	// Implement: CameraManipulator
 
 	private Vector2 cam_manip;
-	
+
 	/// <summary>
 	/// Manipulate the camera to move closer towards where the cursor is pointing.
 	/// </summary>
@@ -83,14 +116,14 @@ public class PlayerController : MonoBehaviour, DeathBehaviour, HurtBehaviour, Ca
 		// Calculate offsets.
 		float mx = (cursor.x - (Screen.width / 2f)) / Screen.width;
 		float my = (cursor.y - (Screen.height / 2f)) / Screen.height;
-		
+
 		// Clamp and modify offsets.
 		mx = Mathf.Clamp(mx, -0.5f, 0.5f) * 2.5f;
 		my = Mathf.Clamp(my, -0.5f, 0.5f) * 1f;
-		
+
 		// Dampen.
 		cam_manip = Vector2.Lerp(cam_manip, new Vector2(mx, my), Time.deltaTime * 2f);
-		
+
 		// Update camera.
 		pos += cam_manip;
 	}
@@ -99,9 +132,6 @@ public class PlayerController : MonoBehaviour, DeathBehaviour, HurtBehaviour, Ca
 	// -----------------------------------------------------------------------------------------------------------------
 	// API:
 
-	/// <summary>
-	/// 
-	/// </summary>
 	public void FaceLeft() {
 		if (facingLeft) return;
 
@@ -201,13 +231,11 @@ public class PlayerController : MonoBehaviour, DeathBehaviour, HurtBehaviour, Ca
 
 		// Cast rays to check if standing on ground.
 		foreach (var ray in rays) {
-			foreach (var mask in GroundLayers) {
-				if (Physics2D.Raycast(ray, Vector2.down, 0.1f, mask.value)) {
-					falling = false;
-					jumping = false;
-					jumpsRemaining = Jumps;
-					return;
-				}
+			if (Physics2D.Raycast(ray, Vector2.down, 0.1f, GroundLayers).collider != null) {
+				falling = false;
+				jumping = false;
+				jumpsRemaining = Jumps;
+				return;
 			}
 		}
 
@@ -215,5 +243,25 @@ public class PlayerController : MonoBehaviour, DeathBehaviour, HurtBehaviour, Ca
 			falling = true;
 			fallingLastY = body.position.y;
 		}
+	}
+
+	/// <summary>
+	/// Shoot a bullet.
+	/// </summary>
+	void Shoot() {
+		if (GunProjectile == null) {
+			return;
+		}
+		
+		// Get angle.
+		float angle = AngleHelper.RadiansBetween(transform.position, Camera.main.ScreenToWorldPoint(new Vector3(
+			Input.mousePosition.x,
+			Input.mousePosition.y,
+			10
+		)));
+		
+		// Spawn projectile.
+		Debug.Log(angle * Mathf.Rad2Deg);
+		Instantiate(GunProjectile, transform.position, Quaternion.Euler(0, 0, angle * Mathf.Rad2Deg));
 	}
 }

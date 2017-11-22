@@ -15,7 +15,7 @@ public class ZombieResearcherController : MonoBehaviour, DeathBehaviour, HurtBeh
 	// -----------------------------------------------------------------------------------------------------------------
 	// Configurable:
 
-	public LayerMask[] GroundLayers = { };
+	public LayerMask GroundLayers;
 	public int TicksIdle = 60;
 	public int TicksMove = 60;
 	public int TicksAttacking = 180;
@@ -88,23 +88,29 @@ public class ZombieResearcherController : MonoBehaviour, DeathBehaviour, HurtBeh
 
 	public void OnDeath() {
 		animator.SetTrigger("Death");
+		
+		//
+		gameObject.SetActive(false);
 	}
 
 	public void OnHurt(float amount) {
-		animator.SetTrigger("Hurt");
+		animator.SetBool("Hurt", true);
+	}
+
+	public void OnVulnerable() {
+		animator.SetBool("Hurt", false);
 	}
 
 	// -----------------------------------------------------------------------------------------------------------------
 	// Enemy_ZombieResearcher:
 
 	void UpdateState() {
-		if (gameObject.CanSee(player_body, SEE_DISTANCE, GroundLayers)) {
-			animator.ResetTrigger("Target Lost");
-			animator.SetTrigger("Target Acquired");
+		bool los = gameObject.CanSee(player_body, SEE_DISTANCE, GroundLayers);
+		animator.SetBool("Attacking", true);
+		if (los) {
 			state = State.ATTACK;
 			updateTicks = TicksAttacking;
 		} else {
-			animator.SetTrigger("Target Lost");
 			if (UnityEngine.Random.Range(0, 2) == 1) {
 				state = State.WALK;
 				updateTicks = TicksMove;

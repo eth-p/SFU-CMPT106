@@ -15,8 +15,8 @@ static public class AngleHelper {
 	/// <returns>The angle in radians.</returns>
 	static public float RadiansBetween(this Vector2 self, Vector2 point) {
 		return Mathf.Atan2(
-			point.x - self.x,
-			point.y - self.y
+			point.y - self.y,
+			point.x - self.x
 		);
 	}
 
