@@ -249,6 +249,7 @@ public class PlayerController : MonoBehaviour, DeathBehaviour, HurtBehaviour, Ca
 	/// Shoot a bullet.
 	/// </summary>
 	void Shoot() {
+		return;
 		if (GunProjectile == null) {
 			return;
 		}

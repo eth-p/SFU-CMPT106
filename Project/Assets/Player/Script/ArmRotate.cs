@@ -1,6 +1,8 @@
-﻿using System;
-using UnityEngine;
+﻿using UnityEngine;
 
+/// <summary>
+/// A controller that rotates the player's arm.
+/// </summary>
 public class ArmRotate : MonoBehaviour {
 	// -----------------------------------------------------------------------------------------------------------------
 	// Constants:
@@ -8,39 +10,26 @@ public class ArmRotate : MonoBehaviour {
 	protected const float ROTATION_SPEED = 8f;
 
 	// -----------------------------------------------------------------------------------------------------------------
-	// Internal:
+	// Variables:
 
-	private PlayerController player;
-
-	// -----------------------------------------------------------------------------------------------------------------
-	// Unity:
-
-	void Start() {
-		player = GetComponentInParent<PlayerController>();
-	}
-
-	void Update() {
-		ApplyRotation();
-		ApplyFlip();
-	}
+	protected PlayerController player;
 
 	// -----------------------------------------------------------------------------------------------------------------
-	// ArmRotate:
+	// Methods:
 
 	/// <summary>
 	/// Rotate the arm based on the angle between the cursor and the 
 	/// </summary>
 	void ApplyRotation() {
 		// Calculate angle.
-		float angle = AngleHelper.RadiansBetween(Camera.main.ScreenToWorldPoint(new Vector3(
+		float angle = AngleHelper.RadiansBetween(player.transform.position, Camera.main.ScreenToWorldPoint(new Vector3(
 			Input.mousePosition.x,
 			Input.mousePosition.y,
 			10
-		)), player.transform.position);
-		
+		)));
 
 		// Apply rotation.
-		Quaternion rotation = Quaternion.Euler(new Vector3(0f, 0f, angle * Mathf.Rad2Deg + 90f));
+		Quaternion rotation = Quaternion.Euler(new Vector3(0f, 0f, angle * Mathf.Rad2Deg - 90f));
 		if (ROTATION_SPEED > 0) {
 			transform.rotation = Quaternion.Slerp(transform.rotation, rotation, ROTATION_SPEED * Time.deltaTime);
 		} else {
@@ -67,5 +56,20 @@ public class ArmRotate : MonoBehaviour {
 			transform.localScale = new Vector3(1f, 1f, 1f);
 			player.FaceRight();
 		}
+	}
+
+	/// <summary>
+	/// [UNITY] Called when the object is instantiated.
+	/// </summary>
+	void Start() {
+		player = GetComponentInParent<PlayerController>();
+	}
+
+	/// <summary>
+	/// [UNITY] Called every frame.
+	/// </summary>
+	void Update() {
+		ApplyRotation();
+		ApplyFlip();
 	}
 }

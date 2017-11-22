@@ -6,6 +6,8 @@ TagManager:
   tags:
   - Enemy
   - Ground
+  - Projectile
+  - Player Weapon
   layers:
   - Default
   - TransparentFX
@@ -17,8 +19,8 @@ TagManager:
   - 
   - Ground
   - Entity
-  - 
-  - 
+  - Player
+  - Pickup
   - 
   - 
   - 
@@ -48,6 +50,9 @@ TagManager:
     locked: 0
   - name: Enemy
     uniqueID: 681148667
+    locked: 0
+  - name: Projectile
+    uniqueID: 2845975717
     locked: 0
   - name: Player (Behind)
     uniqueID: 3238544773
