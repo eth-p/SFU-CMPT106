@@ -1,8 +1,6 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
-public static class Helper {
+public static class LayerHelper {
     
     /// <summary>
     /// Check if a layer is inside a LayerMask.

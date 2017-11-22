@@ -71,6 +71,8 @@ public class PlayerController : MonoBehaviour, DeathBehaviour, HurtBehaviour, Ca
 
 	// -----------------------------------------------------------------------------------------------------------------
 	// Implement: CameraManipulator
+
+	private Vector2 cam_manip;
 	
 	/// <summary>
 	/// Manipulate the camera to move closer towards where the cursor is pointing.
@@ -83,13 +85,14 @@ public class PlayerController : MonoBehaviour, DeathBehaviour, HurtBehaviour, Ca
 		float my = (cursor.y - (Screen.height / 2f)) / Screen.height;
 		
 		// Clamp and modify offsets.
-		mx = Mathf.Clamp(mx, -0.5f, 0.5f) * 3f;
-		my = Mathf.Clamp(my, -0.5f, 0.5f) * 3f;
+		mx = Mathf.Clamp(mx, -0.5f, 0.5f) * 2.5f;
+		my = Mathf.Clamp(my, -0.5f, 0.5f) * 1f;
 		
-		Debug.Log(my);
+		// Dampen.
+		cam_manip = Vector2.Lerp(cam_manip, new Vector2(mx, my), Time.deltaTime * 2f);
 		
-		// Update position.
-		pos += new Vector2(mx, my);
+		// Update camera.
+		pos += cam_manip;
 	}
 
 

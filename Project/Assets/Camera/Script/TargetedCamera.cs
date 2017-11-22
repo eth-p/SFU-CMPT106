@@ -39,7 +39,15 @@ public class TargetedCamera : MonoBehaviour {
 	void Reposition(Vector2 pos) {
 		last = pos;
 		
-		// Apply boundaries and update.
+		// Apply boundaries.
+		pos = pos.Clamp(min_ortho, max_ortho);
+		
+		// Manipulate position.
+		if (manip != null) {
+			manip.ManipulateCamera(ref pos);
+		}
+		
+		// Apply boundaries again and update.
 		pos = pos.Clamp(min_ortho, max_ortho);
 		this.transform.position = new Vector3(pos.x, pos.y, Z);
 	}
@@ -96,11 +104,6 @@ public class TargetedCamera : MonoBehaviour {
 		// Set position to target.
 		if (Mathf.Abs(camPos.x - tarPos.x) > Distance || Mathf.Abs(camPos.y - tarPos.y) > Distance) {
 			next = tarPos;
-		}
-
-		// Manipulate position.
-		if (manip != null) {
-			manip.ManipulateCamera(ref next);
 		}
 
 		// Dampen.
