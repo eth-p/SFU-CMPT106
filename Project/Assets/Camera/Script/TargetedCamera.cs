@@ -28,6 +28,7 @@ public class TargetedCamera : MonoBehaviour {
 	protected Camera cam;
 	protected CameraManipulator manip;
 
+	protected bool bound;
 	protected Vector2 min;
 	protected Vector2 max;
 	protected Vector2 min_ortho;
@@ -40,15 +41,21 @@ public class TargetedCamera : MonoBehaviour {
 		last = pos;
 		
 		// Apply boundaries.
-		pos = pos.Clamp(min_ortho, max_ortho);
-		
+		if (bound) {
+			pos = pos.Clamp(min_ortho, max_ortho);
+		}
+
 		// Manipulate position.
 		if (manip != null) {
 			manip.ManipulateCamera(ref pos);
 		}
 		
-		// Apply boundaries again and update.
-		pos = pos.Clamp(min_ortho, max_ortho);
+		// Apply boundaries again.
+		if (bound) {
+			pos = pos.Clamp(min_ortho, max_ortho);
+		}
+		
+		// Set transform position.
 		this.transform.position = new Vector3(pos.x, pos.y, Z);
 	}
 
@@ -61,34 +68,37 @@ public class TargetedCamera : MonoBehaviour {
 		GameObject bound_tr = GameObject.Find("Bound_TR");
 		GameObject bound_bl = GameObject.Find("Bound_BL");
 		GameObject bound_br = GameObject.Find("Bound_BR");
-		
-		// Deactivate boundary objects.
-		bound_tl.SetActive(false);
-		bound_tr.SetActive(false);
-		bound_bl.SetActive(false);
-		bound_br.SetActive(false);
+		bound = bound_tl != null & bound_tr != null & bound_bl != null & bound_br != null;
 
-		// Calculate min/max world coords.
-		min = new Vector2(
-			Math.Max(bound_tl.transform.position.x, bound_bl.transform.position.x) + 0.5f,
-			Math.Max(bound_bl.transform.position.y, bound_br.transform.position.y) + 0.5f
-		);
-		
-		max = new Vector2(
-			Math.Min(bound_tr.transform.position.x, bound_br.transform.position.x) - 0.5f,
-			Math.Min(bound_tl.transform.position.y, bound_tr.transform.position.y) - 0.5f
-		);
+		if (bound) {
+			// Deactivate boundary objects.
+			bound_tl.SetActive(false);
+			bound_tr.SetActive(false);
+			bound_bl.SetActive(false);
+			bound_br.SetActive(false);
 
-		// Calculate min/max camera coords.
-		min_ortho = min + (SIZE / 2);
-		max_ortho = max - (SIZE / 2);
+			// Calculate min/max world coords.
+			min = new Vector2(
+				Math.Max(bound_tl.transform.position.x, bound_bl.transform.position.x) + 0.5f,
+				Math.Max(bound_bl.transform.position.y, bound_br.transform.position.y) + 0.5f
+			);
+
+			max = new Vector2(
+				Math.Min(bound_tr.transform.position.x, bound_br.transform.position.x) - 0.5f,
+				Math.Min(bound_tl.transform.position.y, bound_tr.transform.position.y) - 0.5f
+			);
+
+			// Calculate min/max camera coords.
+			min_ortho = min + (SIZE / 2);
+			max_ortho = max - (SIZE / 2);
+		}
 	}
 	
 	// -----------------------------------------------------------------------------------------------------------------
 	// Camera:
 
 	void DebugDraw() {
-		if (DebugSettings.CAMERA_LIMITS) {
+		if (bound && DebugSettings.CAMERA_LIMITS) {
 			Debug.DrawLine(min, new Vector2(min.x, max.y), Color.magenta);
 			Debug.DrawLine(min, new Vector2(max.x, min.y), Color.magenta);
 			Debug.DrawLine(max, new Vector2(min.x, max.y), Color.magenta);
