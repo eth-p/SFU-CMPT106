@@ -150,7 +150,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   DAMAGE: 1
-  KNOCKBACK: 5
+  KNOCKBACK: 15
 --- !u!212 &212107204783712454
 SpriteRenderer:
   m_ObjectHideFlags: 1

@@ -23,7 +23,7 @@ GameObject:
   - component: {fileID: 92596778987298174}
   - component: {fileID: 124338486172112720}
   - component: {fileID: 81563800128143968}
-  - component: {fileID: 114379450737708394}
+  - component: {fileID: 114927092621149792}
   m_Layer: 0
   m_Name: Camera
   m_TagString: MainCamera
@@ -38,7 +38,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1077103078017120}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -2.53, y: -0, z: -10}
+  m_LocalPosition: {x: -6.14, y: 5.03, z: -10}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
@@ -60,10 +60,10 @@ Camera:
     y: 0
     width: 1
     height: 1
-  near clip plane: 0.3
+  near clip plane: 0
   far clip plane: 1000
   field of view: 55
-  orthographic: 0
+  orthographic: 1
   orthographic size: 5
   m_Depth: -1
   m_CullingMask:
@@ -74,7 +74,7 @@ Camera:
   m_TargetDisplay: 0
   m_TargetEye: 3
   m_HDR: 1
-  m_AllowMSAA: 1
+  m_AllowMSAA: 0
   m_ForceIntoRT: 0
   m_OcclusionCulling: 1
   m_StereoConvergence: 10
@@ -93,7 +93,7 @@ Behaviour:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1077103078017120}
   m_Enabled: 1
---- !u!114 &114379450737708394
+--- !u!114 &114927092621149792
 MonoBehaviour:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
@@ -101,11 +101,12 @@ MonoBehaviour:
   m_GameObject: {fileID: 1077103078017120}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9b183cfd9d6d6164ca70ad9eac352984, type: 3}
+  m_Script: {fileID: 11500000, guid: e3731cdf94bd94c81817c5f331e3de5c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  focus: {fileID: 0}
-  dampeningTime: 1
+  Target: {fileID: 0}
+  Dampening: 1
+  Distance: 0
 --- !u!124 &124338486172112720
 Behaviour:
   m_ObjectHideFlags: 1
