@@ -2,13 +2,13 @@
 
 public class Health : MonoBehaviour {
 	// -----------------------------------------------------------------------------------------------------------------
-	// CONFIGURABLE VARIABLES:
+	// Configurable:
 
 	public float Maximum = 10f;
 	public int Iframes = 10;
 
 	// -----------------------------------------------------------------------------------------------------------------
-	// INTERNAL VARIABLES:
+	// Internal:
 
 	protected float health = 10f;
 	protected int invincibility = 0;
@@ -16,9 +16,10 @@ public class Health : MonoBehaviour {
 	protected DeathBehaviour[] on_death;
 	protected HurtBehaviour[] on_hurt;
 	protected Rigidbody2D body;
+	protected Collider2D col;
 
 	// -----------------------------------------------------------------------------------------------------------------
-	// PUBLIC VARIABLES:
+	// Public:
 
 	/// <summary>
 	/// The current health value.
@@ -87,33 +88,29 @@ public class Health : MonoBehaviour {
 	/// Damage the entity and knock it back.
 	/// </summary>
 	/// <param name="damage">The damage value.</param>
-	/// <param name="attacker">The position of the attacker.</param>
+	/// <param name="attacker">The attacker.</param>
 	/// <param name="knockback">The knockback scale.</param>
-	public void DamageWithKnockback(float damage, Vector2 attacker, float knockback) {
+	public void DamageWithKnockback(float damage, Collider2D attacker, float knockback) {
 		if (invincibility > 0)
 			return;
 
 		// Calculate and apply knockback.
 		if (body != null) {
-			float angle = Mathf.Atan2(
-				transform.position.x - attacker.x,
-				transform.position.y - attacker.y
+			Bounds pb = col.bounds;
+			Bounds ab = attacker.bounds;
+			
+			Vector2 kbvec = new Vector2(
+				Mathf.Sign(pb.center.x - ab.center.x) * knockback,
+				1f * knockback
 			);
 
-			float vx = Mathf.Cos(angle) * -knockback;
-			float vy = 0; // Mathf.Sin(angle) * knockback;
-
-			Debug.Log(Mathf.Sign(body.velocity.x));
-			Debug.Log(Mathf.Sign(vx));
-			Debug.Log(vx);
-			if ((int) Mathf.Sign(body.velocity.x) == (int) Mathf.Sign(vx)) {
-				body.velocity += new Vector2(vx, vy);
+			Debug.Log(ab.center.x - pb.center.x);
+			Debug.Log(kbvec);
+			if ((int) Mathf.Sign(body.velocity.x) == (int) Mathf.Sign(kbvec.x)) {
+				body.velocity += kbvec;
 			} else {
-				Debug.Log("REPLACE");
-				body.velocity = new Vector2(vx, vy);
+				body.velocity = kbvec;
 			}
-			
-			Debug.Log(body.velocity);
 		}
 
 		// Apply damage.
@@ -143,6 +140,7 @@ public class Health : MonoBehaviour {
 		on_death = this.GetInterfaces<DeathBehaviour>();
 		on_hurt = this.GetInterfaces<HurtBehaviour>();
 		body = GetComponent<Rigidbody2D>();
+		col = GetComponent<Collider2D>();
 	}
 
 	public void FixedUpdate() {

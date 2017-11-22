@@ -1,7 +1,6 @@
 ﻿using UnityEngine;
 
-public class PlayerController : MonoBehaviour, DeathBehaviour, HurtBehaviour {
-	
+public class PlayerController : MonoBehaviour, DeathBehaviour, HurtBehaviour, CameraManipulator {
 	// -----------------------------------------------------------------------------------------------------------------
 	// Constants:
 
@@ -9,17 +8,17 @@ public class PlayerController : MonoBehaviour, DeathBehaviour, HurtBehaviour {
 	protected const float SPEED_MAX_FORWARDS = 4.5f;
 	protected const float SPEED_MAX_BACKWARDS = 3.5f;
 
-	
+
 	// -----------------------------------------------------------------------------------------------------------------
 	// Configurable:
 
-	public LayerMask[] GroundLayers = {};
+	public LayerMask[] GroundLayers = { };
 	public int Jumps = 1;
 
-	
+
 	// -----------------------------------------------------------------------------------------------------------------
 	// Internal:
-	
+
 	private int jumpsRemaining;
 	private bool jumping;
 	private bool falling;
@@ -34,7 +33,7 @@ public class PlayerController : MonoBehaviour, DeathBehaviour, HurtBehaviour {
 
 	private ArmRotate armRotate;
 
-	
+
 	// -----------------------------------------------------------------------------------------------------------------
 	// Unity:
 	void Start() {
@@ -44,7 +43,7 @@ public class PlayerController : MonoBehaviour, DeathBehaviour, HurtBehaviour {
 		health = GetComponent<Health>();
 		animator = GetComponent<Animator>();
 		col = GetComponent<Collider2D>();
-		
+
 		armRotate = GetComponentInChildren<ArmRotate>();
 	}
 
@@ -57,7 +56,7 @@ public class PlayerController : MonoBehaviour, DeathBehaviour, HurtBehaviour {
 		ApplyMovement();
 	}
 
-	
+
 	// -----------------------------------------------------------------------------------------------------------------
 	// Implement: DeathBehaviour, HurtBehaviour
 
@@ -68,24 +67,52 @@ public class PlayerController : MonoBehaviour, DeathBehaviour, HurtBehaviour {
 	public void OnHurt(float amount) {
 		Debug.Log("You took " + amount + " damage.");
 	}
+
+
+	// -----------------------------------------------------------------------------------------------------------------
+	// Implement: CameraManipulator
+
+	private Vector2 cam_manip;
 	
+	/// <summary>
+	/// Manipulate the camera to move closer towards where the cursor is pointing.
+	/// </summary>
+	public void ManipulateCamera(ref Vector2 pos) {
+		Vector3 cursor = Input.mousePosition;
+
+		// Calculate offsets.
+		float mx = (cursor.x - (Screen.width / 2f)) / Screen.width;
+		float my = (cursor.y - (Screen.height / 2f)) / Screen.height;
+		
+		// Clamp and modify offsets.
+		mx = Mathf.Clamp(mx, -0.5f, 0.5f) * 2.5f;
+		my = Mathf.Clamp(my, -0.5f, 0.5f) * 1f;
+		
+		// Dampen.
+		cam_manip = Vector2.Lerp(cam_manip, new Vector2(mx, my), Time.deltaTime * 2f);
+		
+		// Update camera.
+		pos += cam_manip;
+	}
+
+
 	// -----------------------------------------------------------------------------------------------------------------
 	// API:
-	
+
 	/// <summary>
 	/// 
 	/// </summary>
 	public void FaceLeft() {
 		if (facingLeft) return;
-		
+
 		facingLeft = true;
 		animator.SetTrigger("Flip Left");
 		animator.ResetTrigger("Flip Right");
 	}
-	
+
 	public void FaceRight() {
 		if (!facingLeft) return;
-		
+
 		facingLeft = false;
 		animator.SetTrigger("Flip Right");
 		animator.ResetTrigger("Flip Left");
@@ -145,7 +172,7 @@ public class PlayerController : MonoBehaviour, DeathBehaviour, HurtBehaviour {
 			vy
 		);
 	}
-	
+
 	/// <summary>
 	/// Check if the player is on the ground, and update variables accordingly.
 	/// </summary>
@@ -189,5 +216,4 @@ public class PlayerController : MonoBehaviour, DeathBehaviour, HurtBehaviour {
 			fallingLastY = body.position.y;
 		}
 	}
-
 }

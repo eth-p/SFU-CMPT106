@@ -59,7 +59,6 @@ public class ArmRotate : MonoBehaviour {
 		float angle = transform.rotation.eulerAngles.z - 180f;
 		float abs = Mathf.Abs(angle);
 		if (abs < 10 || abs > 170) {
-			Debug.Log(abs);
 			return;
 		}
 
