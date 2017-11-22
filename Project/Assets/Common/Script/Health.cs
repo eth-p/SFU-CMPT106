@@ -2,13 +2,13 @@
 
 public class Health : MonoBehaviour {
 	// -----------------------------------------------------------------------------------------------------------------
-	// CONFIGURABLE VARIABLES:
+	// Configurable:
 
 	public float Maximum = 10f;
 	public int Iframes = 10;
 
 	// -----------------------------------------------------------------------------------------------------------------
-	// INTERNAL VARIABLES:
+	// Internal:
 
 	protected float health = 10f;
 	protected int invincibility = 0;
@@ -19,7 +19,7 @@ public class Health : MonoBehaviour {
 	protected Collider2D col;
 
 	// -----------------------------------------------------------------------------------------------------------------
-	// PUBLIC VARIABLES:
+	// Public:
 
 	/// <summary>
 	/// The current health value.

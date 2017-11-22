@@ -10,4 +10,9 @@
 	/// </summary>
 	static public bool RAYCAST_GROUNDCHECK = true;
 
+	/// <summary>
+	/// View camera limits.
+	/// </summary>
+	static public bool CAMERA_LIMITS = true;
+
 }

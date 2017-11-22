@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 
 /// <summary>
-/// Extension functions that assist in dealing with angles.  
+/// Extension functions that assist in dealing with vectors.  
 /// </summary>
 static public class AngleHelper {
 	// -----------------------------------------------------------------------------------------------------------------
@@ -30,4 +30,16 @@ static public class AngleHelper {
 		float angle = RadiansBetween(self, point);
 		return new Vector2(Mathf.Sin(angle), Mathf.Cos(angle));
 	}
+
+	/// <summary>
+	/// Get a clamped vector.
+	/// </summary>
+	/// <param name="self">The vector to clamp.</param>
+	/// <param name="min">The minimum.</param>
+	/// <param name="max">The maximum.</param>
+	/// <returns>The clamped vector.</returns>
+	static public Vector2 Clamp(this Vector2 self, Vector2 min, Vector2 max) {
+		return Vector2.Max(min, Vector2.Min(max, self));
+	}
+	
 }
