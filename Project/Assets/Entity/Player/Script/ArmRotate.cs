@@ -22,7 +22,7 @@ public class ArmRotate : MonoBehaviour {
 	/// </summary>
 	void ApplyRotation() {
 		// Calculate angle.
-		float angle = AngleHelper.RadiansBetween(player.transform.position, Camera.main.ScreenToWorldPoint(new Vector3(
+		float angle = VectorHelper.RadiansBetween(player.transform.position, Camera.main.ScreenToWorldPoint(new Vector3(
 			Input.mousePosition.x,
 			Input.mousePosition.y,
 			10

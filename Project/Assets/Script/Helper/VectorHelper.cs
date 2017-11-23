@@ -3,7 +3,7 @@
 /// <summary>
 /// Extension functions that assist in dealing with vectors.  
 /// </summary>
-static public class AngleHelper {
+static public class VectorHelper {
 	// -----------------------------------------------------------------------------------------------------------------
 	// EXTENSIONS: Vector2
 	

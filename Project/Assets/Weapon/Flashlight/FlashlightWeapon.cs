@@ -44,7 +44,7 @@ public class FlashlightWeapon : AbstractWeapon {
 	/// <summary>
 	/// Super-flash the flashlight.
 	/// </summary>
-	void Flash() {
+	public void Flash() {
 		animator.SetBool("Weapon:Flash", true);
 		for (uint i = 0; i < lights.Length; i++) {
 			Light light = lights[i];
@@ -64,7 +64,7 @@ public class FlashlightWeapon : AbstractWeapon {
 	/// <summary>
 	/// Revert the flash.
 	/// </summary>
-	void Revert() {
+	public void Revert() {
 		animator.SetBool("Weapon:Flash", false);
 		duration = 0;
 		for (uint i = 0; i < lights.Length; i++) {
@@ -78,7 +78,7 @@ public class FlashlightWeapon : AbstractWeapon {
 	/// <summary>
 	/// [UNITY] Called when the object is instantiated.
 	/// </summary>
-	void Start() {
+	protected void Start() {
 		animator = GetComponent<Animator>();
 		lights = GetComponentsInChildren<Light>();
 		lightscache_intensity = new float[lights.Length];
@@ -88,7 +88,7 @@ public class FlashlightWeapon : AbstractWeapon {
 	/// <summary>
 	/// [UNITY] Called every tick.
 	/// </summary>
-	void FixedUpdate() {
+	protected void FixedUpdate() {
 		base.FixedUpdate();
 
 		if (duration > 0) {

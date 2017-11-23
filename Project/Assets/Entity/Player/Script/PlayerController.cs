@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-public class PlayerController : MonoBehaviour, DeathBehaviour, HurtBehaviour, CameraManipulator {
+public class PlayerController : MonoBehaviour, DeathBehaviour, HurtBehaviour {
 	// -----------------------------------------------------------------------------------------------------------------
 	// Constants:
 
@@ -99,33 +99,6 @@ public class PlayerController : MonoBehaviour, DeathBehaviour, HurtBehaviour, Ca
 		}
 
 		Debug.Log("Vulnerable");
-	}
-
-
-	// -----------------------------------------------------------------------------------------------------------------
-	// Implement: CameraManipulator
-
-	private Vector2 cam_manip;
-
-	/// <summary>
-	/// Manipulate the camera to move closer towards where the cursor is pointing.
-	/// </summary>
-	public void ManipulateCamera(ref Vector2 pos) {
-		Vector3 cursor = Input.mousePosition;
-
-		// Calculate offsets.
-		float mx = (cursor.x - (Screen.width / 2f)) / Screen.width;
-		float my = (cursor.y - (Screen.height / 2f)) / Screen.height;
-
-		// Clamp and modify offsets.
-		mx = Mathf.Clamp(mx, -0.5f, 0.5f) * 2.5f;
-		my = Mathf.Clamp(my, -0.5f, 0.5f) * 1f;
-
-		// Dampen.
-		cam_manip = Vector2.Lerp(cam_manip, new Vector2(mx, my), Time.deltaTime * 2f);
-
-		// Update camera.
-		pos += cam_manip;
 	}
 
 
@@ -255,7 +228,7 @@ public class PlayerController : MonoBehaviour, DeathBehaviour, HurtBehaviour, Ca
 		}
 		
 		// Get angle.
-		float angle = AngleHelper.RadiansBetween(transform.position, Camera.main.ScreenToWorldPoint(new Vector3(
+		float angle = VectorHelper.RadiansBetween(transform.position, Camera.main.ScreenToWorldPoint(new Vector3(
 			Input.mousePosition.x,
 			Input.mousePosition.y,
 			10

@@ -24,7 +24,7 @@ GameObject:
   - component: {fileID: 114133281666904132}
   - component: {fileID: 114613950756604040}
   m_Layer: 5
-  m_Name: GUI
+  m_Name: Ingame GUI
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -78,7 +78,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e2fae205581454c1586ebc187a67d84e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Player: {fileID: 0}
 --- !u!223 &223692078450590058
 Canvas:
   m_ObjectHideFlags: 1
