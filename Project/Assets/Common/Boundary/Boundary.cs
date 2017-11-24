@@ -2,7 +2,7 @@
 using UnityEngine;
 
 /// <summary>
-/// A camera boundary.
+/// A boundary.
 /// </summary>
 public class Boundary {
 	// -----------------------------------------------------------------------------------------------------------------

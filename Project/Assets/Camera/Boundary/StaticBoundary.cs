@@ -23,10 +23,10 @@ public class StaticBoundary : AbstractBoundary {
 	// Implement: AbstractBoundary
 
 	/// <inheritdoc cref="AbstractBoundary.ApplyBoundary"/>
-	protected override void ApplyBoundary(BoundCamera camera) {
+	protected override void ApplyBoundary(BoundaryHolder holder) {
 		Boundary b = new Boundary(Type, new Vector2());
 		UpdateBoundary(b);
-		camera.AddBoundary(b);
+		holder.Boundaries.Add(b);
 	}
 
 

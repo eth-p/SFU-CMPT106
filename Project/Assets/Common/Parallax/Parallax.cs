@@ -3,10 +3,7 @@
 /// <summary>
 /// A script that parallaxes a background.
 /// 
-/// This requires that the camera have a BoundCamera component attached to it.
-/// 
-/// TODO: Change it to work with anything which implements an interface that specifies its bounds.
-/// NOTE: This won't work properly with a camera that doesn't have full bounds.
+/// This requires that the camera have a component with a BoundaryHolder attached to it.
 /// </summary>
 public class Parallax : MonoBehaviour {
 	// -----------------------------------------------------------------------------------------------------------------
@@ -50,7 +47,7 @@ public class Parallax : MonoBehaviour {
 	protected Vector2 max;
 
 	protected Vector2 viewport;
-	protected BoundCamera bound;
+	protected BoundaryHolder holder;
 
 	// -----------------------------------------------------------------------------------------------------------------
 	// API:
@@ -61,7 +58,7 @@ public class Parallax : MonoBehaviour {
 	/// <param name="cam"></param>
 	public void ChangeCamera(Camera cam) {
 		Camera = cam;
-		bound = cam.GetComponent<BoundCamera>();
+		holder = cam.gameObject.GetInterface<BoundaryHolder>();
 	}
 
 	/// <summary>
@@ -74,7 +71,6 @@ public class Parallax : MonoBehaviour {
 
 		Vector2 wanted = viewport * 2f * Mathf.Max(Amount, 1f);
 		Vector2 wsize = sr.WorldSize();
-		Debug.Log(wsize);
 
 		Vector2 ssize = sr.sprite.WorldSize(); // <-- sprite size
 		Vector2 scale = transform.lossyScale;
@@ -100,11 +96,7 @@ public class Parallax : MonoBehaviour {
 	/// Recalculate the camera viewport.
 	/// </summary>
 	public void RecalculateViewport() {
-		if (bound != null) {
-			viewport = bound.Viewport;
-		} else {
-			viewport = Camera.Coverage();
-		}
+		viewport = Camera.Coverage();
 	}
 
 	/// <summary>
@@ -124,8 +116,9 @@ public class Parallax : MonoBehaviour {
 	/// It will cause an obvious position shift.
 	/// </summary>
 	public void RecalculateBounds() {
-		min = bound.Loose.min;
-		max = bound.Loose.max;
+		BoundaryArea loose = holder.Loose;
+		min = loose.min;
+		max = loose.max;
 	}
 
 	/// <summary>
@@ -136,8 +129,9 @@ public class Parallax : MonoBehaviour {
 	/// </summary>
 	/// <param name="changed">The variable set to whether or not the bounds have changed.</param>
 	public void RecalculateBounds(out bool changed) {
-		Vector2 nmin = bound.Loose.min;
-		Vector2 nmax = bound.Loose.max;
+		BoundaryArea loose = holder.Loose;
+		Vector2 nmin = loose.min;
+		Vector2 nmax = loose.max;
 
 		changed = min != nmin || max != nmax;
 		if (changed) {

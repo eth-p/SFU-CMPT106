@@ -8,19 +8,20 @@ public abstract class AbstractBoundary : MonoBehaviour {
 	// Configurable:
 
 	/// <summary>
-	/// The cameras that this boundary applies to.
+	/// The boundary holders that this applies to.
+	/// This is an array of GameObjects (for the Unity editor's purposes...)
 	/// </summary>
-	public BoundCamera[] Cameras;
+	public GameObject[] Targets;
 
 
 	// -----------------------------------------------------------------------------------------------------------------
 	// Abstract:
 
 	/// <summary>
-	/// Apply this boundary to a camera.
+	/// Apply this boundary to a boundary holder.
 	/// </summary>
-	/// <param name="camera">The bound camera.</param>
-	protected abstract void ApplyBoundary(BoundCamera camera);
+	/// <param name="holder">The boundary holder.</param>
+	protected abstract void ApplyBoundary(BoundaryHolder holder);
 
 
 	// -----------------------------------------------------------------------------------------------------------------
@@ -30,16 +31,23 @@ public abstract class AbstractBoundary : MonoBehaviour {
 	/// [UNITY] Called when the object is instantiated.
 	/// </summary>
 	protected void Start() {
-		// Attempt to apply the boundary to the provided cameras.
-		// If no cameras were provided, attempt to apply it to the main camera.
-		if (Cameras.Length > 0) {
-			foreach (BoundCamera camera in Cameras) {
-				ApplyBoundary(camera);
+		// Attempt to apply the boundary to the provided holders.
+		bool applied = false;
+		foreach (GameObject obj in Targets) {
+			if (obj == null) {
+				continue;
 			}
-		} else {
-			BoundCamera camera = Camera.main.GetComponent<BoundCamera>();
-			if (camera != null) {
-				ApplyBoundary(camera);
+			
+			foreach (BoundaryHolder holder in obj.GetInterfaces<BoundaryHolder>()) {
+				applied = true;
+				ApplyBoundary(holder);
+			}
+		}
+
+		// If no holders were provided, attempt to apply it to the main camera.
+		if (!applied) {
+			foreach (BoundaryHolder holder in Camera.main.gameObject.GetInterfaces<BoundaryHolder>()) {
+				ApplyBoundary(holder);
 			}
 		}
 	}

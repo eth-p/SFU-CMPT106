@@ -26,8 +26,8 @@ public class DynamicBoundary : StaticBoundary, BoundaryManipulator {
 	// Implement: AbstractBoundary
 
 	/// <inheritdoc cref="AbstractBoundary.ApplyBoundary"/>
-	protected override void ApplyBoundary(BoundCamera camera) {
-		camera.AddBoundary(bound);
+	protected override void ApplyBoundary(BoundaryHolder holder) {
+		holder.Boundaries.Add(bound);
 	}
 
 

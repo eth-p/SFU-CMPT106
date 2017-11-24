@@ -1,12 +1,8 @@
 ﻿using System;
 
 /// <summary>
-/// 	The type of boundary.
+/// The type of boundary.
 /// </summary>
-/// <remarks>
-/// 	This is also used as a bitfield.<br/>
-/// 	<b>Do not modify the enum values or things will break.</b>
-/// </remarks>
 [Flags]
 public enum BoundaryType {
 	NONE = 0x00,

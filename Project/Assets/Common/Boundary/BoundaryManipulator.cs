@@ -1,5 +1,5 @@
 ﻿/// <summary>
-/// An interface for dynamic camera boundaries.
+/// An interface for dynamic boundaries.
 /// </summary>
 public interface BoundaryManipulator {
 
