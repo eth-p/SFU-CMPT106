@@ -1,9 +1,9 @@
 ﻿using UnityEngine;
 
 /// <summary>
-/// A script that immediate disables the GameObject.
+/// A script that immediately disables the GameObject.
 /// </summary>
-public class InitOnly : MonoBehaviour {
+public class DisableImmediately : MonoBehaviour {
 	/// <summary>
 	/// [UNITY] Called when the object is instantiated.
 	/// </summary>
