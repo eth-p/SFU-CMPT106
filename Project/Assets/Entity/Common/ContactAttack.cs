@@ -7,13 +7,23 @@ public class ContactAttack : MonoBehaviour {
 	// -----------------------------------------------------------------------------------------------------------------
 	// Configurable:
 
+	/// <summary>
+	/// The amount of damage done.
+	/// </summary>
 	public float Damage = 0.5f;
-	public float Knockback = 1f;
+	
+	/// <summary>
+	/// The knockback done.
+	/// </summary>
+	public float Knockback = 5f;
 
+	/// <summary>
+	/// The layers which can be attacked.
+	/// </summary>
 	public LayerMask AffectLayers;
 
 	// -----------------------------------------------------------------------------------------------------------------
-	// Internal:
+	// Variables:
 	
 	private Collider2D col;
 	
@@ -30,12 +40,18 @@ public class ContactAttack : MonoBehaviour {
 	}
 	
 	// -----------------------------------------------------------------------------------------------------------------
-	// Unity:
+	// Methods:
 
+	/// <summary>
+	/// [UNITY] Called when the object is instantiated.
+	/// </summary>
 	void Start() {
 		col = GetComponent<Collider2D>();
 	}
 
+	/// <summary>
+	/// [UNITY] Called when the object collides with something else.
+	/// </summary>
 	void OnCollisionEnter2D(Collision2D collision) {
 		// Check if it affects the layer of the collided object.
 		if (!Affects(collision.gameObject)) {
@@ -49,7 +65,6 @@ public class ContactAttack : MonoBehaviour {
 		}
 
 		if (Knockback > 0f) {
-			Debug.Log("KB");
 			health.DamageWithKnockback(Damage, col, Knockback);
 		} else {
 			health.Damage(Damage);

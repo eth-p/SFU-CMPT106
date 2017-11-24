@@ -1,4 +1,7 @@
-﻿public interface HurtBehaviour {
+﻿/// <summary>
+/// An interface for when an entity is damaged.
+/// </summary>
+public interface HurtBehaviour {
 
 	/// <summary>
 	/// Function called when the entity gets damaged.

@@ -1,23 +1,23 @@
 ﻿using UnityEngine;
 
+/// <summary>
+/// The standard health manager for entities.
+/// </summary>
 public class Health : MonoBehaviour {
 	// -----------------------------------------------------------------------------------------------------------------
 	// Configurable:
 
+	/// <summary>
+	/// The maximum health of an entity.
+	/// </summary>
 	public float Maximum = 10f;
-	public int Iframes = 10;
+	
+	/// <summary>
+	/// The number of invincibility frames given to an entity when damaged.
+	/// </summary>
+	public uint Iframes = 10;
 
-	// -----------------------------------------------------------------------------------------------------------------
-	// Internal:
-
-	protected float health = 10f;
-	protected int invincibility = 0;
-
-	protected DeathBehaviour[] on_death;
-	protected HurtBehaviour[] on_hurt;
-	protected Rigidbody2D body;
-	protected Collider2D col;
-
+	
 	// -----------------------------------------------------------------------------------------------------------------
 	// Public:
 
@@ -34,6 +34,19 @@ public class Health : MonoBehaviour {
 		}
 	}
 
+	
+	// -----------------------------------------------------------------------------------------------------------------
+	// Variables:
+
+	protected float health = 10f;
+	protected uint invincibility = 0;
+
+	protected DeathBehaviour[] on_death;
+	protected HurtBehaviour[] on_hurt;
+	protected Rigidbody2D body;
+	protected Collider2D col;
+
+	
 	// -----------------------------------------------------------------------------------------------------------------
 	// API:
 
@@ -56,13 +69,16 @@ public class Health : MonoBehaviour {
 		// Apply invincibility and health damage.
 		invincibility = Iframes;
 		health -= amount;
+		EmitHurt(amount);
+		
+		// If dead, run Kill().
 		if (health <= 0f) {
 			Kill();
 		}
-
-		// Run "OnHurt" handlers.
-		foreach (HurtBehaviour handler in on_hurt) {
-			handler.OnHurt(amount);
+		
+		// If no invincibility, run OnVulnerable().
+		if (invincibility == 0) {
+			EmitVulnerable();
 		}
 	}
 
@@ -121,19 +137,42 @@ public class Health : MonoBehaviour {
 	/// If the entity has a DeathBehaviour, it will run that.
 	/// </summary>
 	public void Kill() {
-		if (on_death.Length == 0) {
-			enabled = false;
-			return;
-		}
+		EmitDeath();
+	}
 
-		// Run "OnDeath" handlers.
+	// -----------------------------------------------------------------------------------------------------------------
+	// Methods:
+
+	/// <summary>
+	/// Run the DeathBehaviour.OnDeath handlers.
+	/// </summary>
+	protected void EmitDeath() {
 		foreach (DeathBehaviour handler in on_death) {
 			handler.OnDeath();
 		}
 	}
-
-	// -----------------------------------------------------------------------------------------------------------------
-	// UNITY:
+	
+	/// <summary>
+	/// Run the HurtBehaviour.OnHurt handlers.
+	/// </summary>
+	protected void EmitHurt(float amount) {
+		foreach (HurtBehaviour handler in on_hurt) {
+			handler.OnHurt(amount);
+		}
+	}
+	
+	/// <summary>
+	/// Run the HurtBehaviour.OnVulnerable handlers.
+	/// </summary>
+	protected void EmitVulnerable() {
+		foreach (HurtBehaviour handler in on_hurt) {
+			handler.OnVulnerable();
+		}
+	}
+	
+	/// <summary>
+	/// [UNITY] Called when the object is instantiated.
+	/// </summary>
 	public void Start() {
 		on_death = this.GetInterfaces<DeathBehaviour>();
 		on_hurt = this.GetInterfaces<HurtBehaviour>();
@@ -142,13 +181,14 @@ public class Health : MonoBehaviour {
 		Value = Maximum;
 	}
 
+	
+	/// <summary>
+	/// [UNITY] Called every tick.
+	/// </summary>
 	public void FixedUpdate() {
 		if (invincibility > 0) {
 			if (--invincibility < 1) {
-				// Run "OnVulnerable" handlers.
-				foreach (HurtBehaviour handler in on_hurt) {
-					handler.OnVulnerable();
-				}
+				EmitVulnerable();
 			}
 		}
 	}

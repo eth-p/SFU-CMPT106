@@ -1,5 +1,8 @@
 ﻿using UnityEngine;
 
+/// <summary>
+/// The main controller for the player character.
+/// </summary>
 public class PlayerController : MonoBehaviour, DeathBehaviour, HurtBehaviour {
 	// -----------------------------------------------------------------------------------------------------------------
 	// Constants:
@@ -12,15 +15,35 @@ public class PlayerController : MonoBehaviour, DeathBehaviour, HurtBehaviour {
 	// -----------------------------------------------------------------------------------------------------------------
 	// Configurable:
 
-	public GameObject GunProjectile;
-	public int GunCooldown = 30;
+	/// <summary>
+	/// The layers which resets the player's ground status.
+	/// </summary>
 	public LayerMask GroundLayers;
+
+	/// <summary>
+	/// The layers which collision will be disabled when the player is hurt.
+	/// </summary>
 	public LayerMask EnemyLayers;
+
+	/// <summary>
+	/// The number of jumps the player can do before having to touch the ground again.
+	/// </summary>
 	public int Jumps = 1;
 
 
 	// -----------------------------------------------------------------------------------------------------------------
-	// Internal:
+	// Public:
+
+	/// <summary>
+	/// Whether or not the player is on the ground.
+	/// </summary>
+	public bool Grounded {
+		get { return !falling && !jumping; }
+	}
+
+	
+	// -----------------------------------------------------------------------------------------------------------------
+	// Variables:
 
 	private int[] cache_EnemyLayers;
 
@@ -36,55 +59,16 @@ public class PlayerController : MonoBehaviour, DeathBehaviour, HurtBehaviour {
 	private Rigidbody2D body;
 	private Animator animator;
 
-	private ArmRotate armRotate;
-
-	private int shootCooldown = 0;
-
-
-	// -----------------------------------------------------------------------------------------------------------------
-	// Unity:
-
-	void Start() {
-		body = GetComponent<Rigidbody2D>();
-		body.drag = 10;
-
-		health = GetComponent<Health>();
-		animator = GetComponent<Animator>();
-		col = GetComponent<Collider2D>();
-
-		armRotate = GetComponentInChildren<ArmRotate>();
-
-		// Set up layer caches.
-		cache_EnemyLayers = EnemyLayers.ToLayers();
-	}
-
-	void Update() {
-		ApplyAnimation();
-	}
-
-	void FixedUpdate() {
-		CheckGrounded();
-		ApplyMovement();
-
-		// Shoot.
-		if (shootCooldown > 0) {
-			shootCooldown--;
-		} else {
-			if (Input.GetAxis("Shoot") > 0.1) {
-				shootCooldown = GunCooldown;
-				Shoot();
-			}
-		}
-	}
-
 
 	// -----------------------------------------------------------------------------------------------------------------
 	// Implement: DeathBehaviour, HurtBehaviour
 
+	/// <inheritdoc cref="DeathBehaviour.OnDeath"/>
 	public void OnDeath() {
 		Debug.Log("YOU DIED!");
 	}
 
+	/// <inheritdoc cref="HurtBehaviour.OnHurt"/>
 	public void OnHurt(float amount) {
 		foreach (int layer in cache_EnemyLayers) {
 			Physics2D.IgnoreLayerCollision(gameObject.layer, layer, true);
@@ -93,6 +77,7 @@ public class PlayerController : MonoBehaviour, DeathBehaviour, HurtBehaviour {
 		Debug.Log("You took " + amount + " damage. You're at " + health.Value + " health.");
 	}
 
+	/// <inheritdoc cref="HurtBehaviour.OnVulnerable"/>
 	public void OnVulnerable() {
 		foreach (int layer in cache_EnemyLayers) {
 			Physics2D.IgnoreLayerCollision(gameObject.layer, layer, false);
@@ -105,6 +90,9 @@ public class PlayerController : MonoBehaviour, DeathBehaviour, HurtBehaviour {
 	// -----------------------------------------------------------------------------------------------------------------
 	// API:
 
+	/// <summary>
+	/// Make the player face left.
+	/// </summary>
 	public void FaceLeft() {
 		if (facingLeft) return;
 
@@ -113,6 +101,9 @@ public class PlayerController : MonoBehaviour, DeathBehaviour, HurtBehaviour {
 		animator.ResetTrigger("Flip Right");
 	}
 
+	/// <summary>
+	/// Make the player face right.
+	/// </summary>
 	public void FaceRight() {
 		if (!facingLeft) return;
 
@@ -121,13 +112,14 @@ public class PlayerController : MonoBehaviour, DeathBehaviour, HurtBehaviour {
 		animator.ResetTrigger("Flip Left");
 	}
 
+
 	// -----------------------------------------------------------------------------------------------------------------
-	// Player:
+	// Methods:
 
 	/// <summary>
 	/// Update the animator states.
 	/// </summary>
-	void ApplyAnimation() {
+	protected void ApplyAnimation() {
 		var axis = Input.GetAxis("Horizontal");
 
 		// Walking animations.
@@ -150,7 +142,7 @@ public class PlayerController : MonoBehaviour, DeathBehaviour, HurtBehaviour {
 	/// <summary>
 	/// Check what buttons are pressed, and move the player if necessary.
 	/// </summary>
-	void ApplyMovement() {
+	protected void ApplyMovement() {
 		var axis = Input.GetAxis("Horizontal");
 		var move = axis * SPEED;
 		var vx = body.velocity.x;
@@ -170,16 +162,13 @@ public class PlayerController : MonoBehaviour, DeathBehaviour, HurtBehaviour {
 		}
 
 		// Update.
-		body.velocity = new Vector2(
-			vx,
-			vy
-		);
+		body.velocity = new Vector2(vx, vy);
 	}
 
 	/// <summary>
 	/// Check if the player is on the ground, and update variables accordingly.
 	/// </summary>
-	void CheckGrounded() {
+	protected void CheckGrounded() {
 		// Calculate ray positions.
 		float rayY = col.bounds.min.y;
 		float rayMinX = col.bounds.min.x;
@@ -218,24 +207,37 @@ public class PlayerController : MonoBehaviour, DeathBehaviour, HurtBehaviour {
 		}
 	}
 
+
+	// -----------------------------------------------------------------------------------------------------------------
+	// Unity:
+
 	/// <summary>
-	/// Shoot a bullet.
+	/// [UNITY] Called when the object is instantiated.
 	/// </summary>
-	void Shoot() {
-		return;
-		if (GunProjectile == null) {
-			return;
-		}
-		
-		// Get angle.
-		float angle = VectorHelper.RadiansBetween(transform.position, Camera.main.ScreenToWorldPoint(new Vector3(
-			Input.mousePosition.x,
-			Input.mousePosition.y,
-			10
-		)));
-		
-		// Spawn projectile.
-		Debug.Log(angle * Mathf.Rad2Deg);
-		Instantiate(GunProjectile, transform.position, Quaternion.Euler(0, 0, angle * Mathf.Rad2Deg));
+	void Start() {
+		body = GetComponent<Rigidbody2D>();
+		body.drag = 10;
+
+		health = GetComponent<Health>();
+		animator = GetComponent<Animator>();
+		col = GetComponent<Collider2D>();
+
+		// Set up layer caches.
+		cache_EnemyLayers = EnemyLayers.ToLayers();
+	}
+
+	/// <summary>
+	/// [UNITY] Called every frame.
+	/// </summary>
+	void Update() {
+		ApplyAnimation();
+	}
+
+	/// <summary>
+	/// [UNITY] Called every tick.
+	/// </summary>
+	void FixedUpdate() {
+		CheckGrounded();
+		ApplyMovement();
 	}
 }

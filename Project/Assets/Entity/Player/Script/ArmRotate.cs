@@ -9,11 +9,13 @@ public class ArmRotate : MonoBehaviour {
 
 	protected const float ROTATION_SPEED = 8f;
 
+	
 	// -----------------------------------------------------------------------------------------------------------------
 	// Variables:
 
 	protected PlayerController player;
 
+	
 	// -----------------------------------------------------------------------------------------------------------------
 	// Methods:
 
