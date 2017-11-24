@@ -5,7 +5,7 @@
 /// </summary>
 static public class TargetingHelper {
 	// -----------------------------------------------------------------------------------------------------------------
-	// EXTENSIONS: GameObject
+	// Extension: GameObject
 
 	/// <summary>
 	/// Check to see if something is in the line of sight.

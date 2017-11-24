@@ -5,7 +5,28 @@
 /// </summary>
 static public class VectorHelper {
 	// -----------------------------------------------------------------------------------------------------------------
-	// EXTENSIONS: Vector2
+	// Constants
+
+	/// <summary>
+	/// An alias for Vector2(float.MinValue, float.MinValue).
+	/// </summary>
+	static public Vector2 minValue {
+		get {
+			return new Vector2(float.MinValue, float.MinValue);
+		}
+	}
+	
+	/// <summary>
+	/// An alis for Vector2(float.MaxValue, float.MaxValue).
+	/// </summary>
+	static public Vector2 maxValue {
+		get {
+			return new Vector2(float.MaxValue, float.MaxValue);
+		}
+	}
+	
+	// -----------------------------------------------------------------------------------------------------------------
+	// Extension: Vector2
 	
 	/// <summary>
 	/// Get the angle (in radians) between two points. 

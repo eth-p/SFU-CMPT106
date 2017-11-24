@@ -39,10 +39,7 @@ public class StaticBoundary : AbstractBoundary {
 	protected void CalculateExtents() {
 		SpriteRenderer sr = GetComponent<SpriteRenderer>();
 		if (sr != null) {
-			extents = new Vector2(
-				sr.sprite.bounds.extents.x * transform.localScale.x,
-				sr.sprite.bounds.extents.y * transform.localScale.y
-			);
+			extents = sr.sprite.WorldSize() * 0.5f;
 		}
 	}
 

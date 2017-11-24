@@ -2,12 +2,12 @@
 using UnityEngine;
 
 /// <summary>
-/// Extension functions that assist in retreiving Unity Components which implement a specific interface.  
+/// A helper class for working with Unity's script components.
 /// </summary>
-static public class InterfaceHelper {
+static public class ComponentHelper {
 	
 	// -----------------------------------------------------------------------------------------------------------------
-	// EXTENSIONS: GameObject
+	// Extension: GameObject
 	/// <summary>
 	/// Get the first Component that implements a specific interface. 
 	/// </summary>
@@ -42,7 +42,7 @@ static public class InterfaceHelper {
 	}
 
 	// -----------------------------------------------------------------------------------------------------------------
-	// EXTENSIONS: MonoBehaviour
+	// Extension: MonoBehaviour
 	/// <summary>
 	/// Get the first Component that implements a specific interface. 
 	/// </summary>

@@ -1,7 +1,13 @@
 ﻿using UnityEngine;
 using System.Collections.Generic;
 
+/// <summary>
+/// Extension functions that assist in LayerMask-related things.  
+/// </summary>
 public static class LayerHelper {
+	// -----------------------------------------------------------------------------------------------------------------
+	// Extension: LayerHelper
+	
 	/// <summary>
 	/// Check if a layer is inside a LayerMask.
 	/// 
@@ -12,6 +18,7 @@ public static class LayerHelper {
 	/// <param name="layer">The layer.</param>
 	/// <returns>True if the layer is inside a LayerMask.</returns>
 	public static bool Contains(this LayerMask mask, int layer) {
+//		return (mask.value & layer) > 0; // TODO: Test if this work.
 		return mask == (mask | (1 << layer));
 	}
 
