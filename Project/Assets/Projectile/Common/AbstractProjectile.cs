@@ -13,11 +13,6 @@ public abstract class AbstractProjectile : MonoBehaviour {
 	/// The speed of the projectile.
 	/// </summary>
 	public float Speed = 2f;
-	
-	/// <summary>
-	/// The number of ticks before the projectile despawns.
-	/// </summary>
-	public int Despawn = 120;
 
 	/// <summary>
 	/// The layers which will trigger a collision.
@@ -28,9 +23,8 @@ public abstract class AbstractProjectile : MonoBehaviour {
 	// -----------------------------------------------------------------------------------------------------------------
 	// Variables:
 
-	private float angle;
-	private Vector2 angle_vec;
-	private int despawnIn;
+	protected float angle;
+	protected Vector2 angle_vec;
 	
 	
 	// -----------------------------------------------------------------------------------------------------------------
@@ -44,7 +38,7 @@ public abstract class AbstractProjectile : MonoBehaviour {
 
 	
 	// -----------------------------------------------------------------------------------------------------------------
-	// ProjectileController:
+	// Methods:
 
 	/// <summary>
 	/// Recalculate the projectile's angle vector.
@@ -68,7 +62,6 @@ public abstract class AbstractProjectile : MonoBehaviour {
 	/// [UNITY] Called when the object is instantiated.
 	/// </summary>
 	void Start() {
-		despawnIn = Despawn;
 		RecalculateAngle();
 	}
 	
@@ -76,12 +69,6 @@ public abstract class AbstractProjectile : MonoBehaviour {
 	/// [UNITY] Called every tick.
 	/// </summary>
 	void FixedUpdate() {
-		if (--despawnIn < 1) {
-			gameObject.SetActive(false);
-			Destroy(gameObject);
-			return;
-		}
-		
 		// Raycast to check for collision.
 		// If it collides with something, run OnCollide and destroy the projectile.
 		// If it doesn't, move the projectile forwards.
