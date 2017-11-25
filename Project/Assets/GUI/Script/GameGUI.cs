@@ -16,12 +16,6 @@ public class GameGUI : MonoBehaviour {
 
 
 	// -----------------------------------------------------------------------------------------------------------------
-	// Configurable:
-
-	public GameObject Player;
-
-
-	// -----------------------------------------------------------------------------------------------------------------
 	// Textures:
 
 	protected Texture2D tex_health;
@@ -30,8 +24,10 @@ public class GameGUI : MonoBehaviour {
 	// -----------------------------------------------------------------------------------------------------------------
 	// Variables:
 
+	protected GameObject Player;
 	protected RectTransform rtransform;
 	protected Health player_health;
+	
 
 
 	// -----------------------------------------------------------------------------------------------------------------
@@ -42,6 +38,9 @@ public class GameGUI : MonoBehaviour {
 		tex_health = AssetDatabase.LoadAssetAtPath<Texture2D>("Assets/GUI/Texture/Health.png");
 		Assert.IsNotNull(tex_health);
 
+		// Get player.
+		Player = GameObject.Find("Player");
+		
 		// Get components.
 		rtransform = GetComponent<RectTransform>();
 		player_health = Player.GetComponent<Health>();
@@ -50,7 +49,7 @@ public class GameGUI : MonoBehaviour {
 	void OnGUI() {
 		Rect screen = rtransform.rect;
 		
-		RenderBar(player_health.Value, player_health.Maximum, tex_health, 4, 22, 2f);
+		RenderBar(player_health.Value, player_health.Maximum, tex_health, 4, 4, 2f);
 	}
 
 
@@ -79,7 +78,6 @@ public class GameGUI : MonoBehaviour {
 			} else if (parts <= 0) {
 				GUI.DrawTextureWithTexCoords(new Rect(x + xi, y, sw, sw), tex, TEX_BAR_EMPTY);
 			} else {
-				Debug.Log(parts);
 				GUI.DrawTextureWithTexCoords(new Rect(x + xi, y, sw * parts, sw), tex, TEX_BAR_FULL);
 				GUI.DrawTextureWithTexCoords(new Rect(x + xi + (sw * parts), y, sw * (1f - parts), sw), tex, TEX_BAR_EMPTY);
 			}
