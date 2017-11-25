@@ -52,4 +52,30 @@ static public class SpriteHelper {
 			sheight * scale.y * (renderer.size.y / sheight)
 		);
 	}
+
+	static public void Expand(this SpriteRenderer renderer, Vector2 target) {
+		
+	}
+
+	static public void ExpandEvenly(this SpriteRenderer renderer, Vector2 target) {
+		Vector2 size = renderer.WorldSize();
+		Vector2 sprite = renderer.sprite.WorldSize();
+		Vector2 scale = renderer.gameObject.transform.lossyScale;
+
+		float width = renderer.size.x;
+		float height = renderer.size.y;
+		
+		// Horizontal.
+		if (size.x < target.x) {
+			width = Mathf.Ceil(target.x / (size.x * scale.x)) * sprite.x;
+		}
+		
+		// Vertical.
+		if (size.y < target.y) {
+			height = Mathf.Ceil(target.y / (size.y * scale.y)) * sprite.y;
+		}
+		
+		// Apply.
+		renderer.size = new Vector2(width, height);
+	}
 }

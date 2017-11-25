@@ -1,27 +1,27 @@
 ﻿using System;
 
 /// <summary>
-/// The parallax stretch/resizing options.
+/// The parallax repeating options.
 /// </summary>
 [Flags]
-public enum ParallaxStretch {
+public enum ParallaxRepeat {
 	/// <summary>
-	/// No stretching (or tiling).
+	/// No repeating.
 	/// </summary>
 	NONE = 0x00,
 
 	/// <summary>
-	/// Stretch (or tile) horizontally.
+	/// Horizontal repeating.
 	/// </summary>
 	HORIZONTAL = 0x01,
 
 	/// <summary>
-	/// Stretch (or tile) vertically.
+	/// Vertical repeating.
 	/// </summary>
 	VERTICAL = 0x02,
 
 	/// <summary>
-	/// Stretch (or tile) both horizontally and vertically.
+	/// Both horizontal and vertical repeating.
 	/// </summary>
 	BOTH = 0x03
 }
