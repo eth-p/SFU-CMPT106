@@ -65,7 +65,7 @@ public abstract class AbstractParallax : MonoBehaviour {
 	/// This may cause a position shift.
 	/// </summary>
 	public virtual void RecalculateSize() {
-		size = sr.sprite.WorldSize();
+		size = sr.sprite.bounds.size;
 	}
 	
 	/// <summary>
