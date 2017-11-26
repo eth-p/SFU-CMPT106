@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using UnityEngine;
 
 public class EnemySpiderController : MonoBehaviour, DeathBehaviour, HurtBehaviour
@@ -140,7 +141,7 @@ public class EnemySpiderController : MonoBehaviour, DeathBehaviour, HurtBehaviou
         if (Math.Abs(gameObject.transform.position.x-player.transform.position.x) < 2 ){
             body.velocity = new Vector2(0f, 0f);
             (Instantiate(spider_spit, spit_from.position, Quaternion.identity) as GameObject).transform.parent = spit_from;
-            Physics2D.IgnoreCollision(gameObject.GetComponent<Collider2D>(), spider_spit.GetComponent<Collider2D>());
+            Physics2D.IgnoreCollision(gameObject.GetComponent<Collider2D>(), spider_spit.GetComponent<Collider2D>());            
         }
         else
         {
@@ -213,3 +214,4 @@ public class EnemySpiderController : MonoBehaviour, DeathBehaviour, HurtBehaviou
         }
     }
 }
+

@@ -15,4 +15,5 @@ public class SpiderSpitController : MonoBehaviour {
         Physics2D.IgnoreCollision(gameObject.GetComponent<Collider2D>(), spider.GetComponent<Collider2D>());
         Destroy(gameObject, 0.5f);
     }
+    
 }
