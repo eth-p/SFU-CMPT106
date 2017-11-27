@@ -39,7 +39,7 @@ public class StaticBoundary : AbstractBoundary {
 	protected void CalculateExtents() {
 		SpriteRenderer sr = GetComponent<SpriteRenderer>();
 		if (sr != null) {
-			extents = sr.sprite.WorldSize() * 0.5f;
+			extents = sr.sprite.bounds.extents;
 		}
 	}
 
@@ -64,10 +64,10 @@ public class StaticBoundary : AbstractBoundary {
 	}
 
 	/// <summary>
-	/// [UNITY] Called when the object is instantiated.
+	/// [UNITY] Called when the object is enabled.
 	/// </summary>
-	protected void Start() {
+	protected void OnEnable() {
 		CalculateExtents();
-		base.Start();
+		base.OnEnable();
 	}
 }

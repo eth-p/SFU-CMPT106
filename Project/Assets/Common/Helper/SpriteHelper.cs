@@ -7,18 +7,18 @@ using UnityEngine;
 static public class SpriteHelper {
 	// -----------------------------------------------------------------------------------------------------------------
 	// Extension: Sprite
-
-	/// <summary>
-	/// Calculate the size of a sprite in world space units.
-	/// </summary>
-	/// <param name="sprite">The sprite.</param>
-	/// <returns>The size of the sprite.</returns>
-	static public Vector2 WorldSize(this Sprite sprite) {
-		return new Vector2(
-			sprite.bounds.extents.x * 2f,
-			sprite.bounds.extents.y * 2f
-		);
-	}
+//
+//	/// <summary>
+//	/// Calculate the size of a sprite in world space units.
+//	/// </summary>
+//	/// <param name="sprite">The sprite.</param>
+//	/// <returns>The size of the sprite.</returns>
+//	static public Vector2 WorldSize(this Sprite sprite) {
+//		return new Vector2(
+//			sprite.bounds.extents.x * 2f,
+//			sprite.bounds.extents.y * 2f
+//		);
+//	}
 
 	/// <summary>
 	/// Calculate the size of a sprite in world space units with a transform applied.
@@ -28,9 +28,11 @@ static public class SpriteHelper {
 	/// <returns>The size of the transformed sprite.</returns>
 	static public Vector2 WorldSize(this Sprite sprite, Transform transform) {
 		Vector2 scale = transform.lossyScale;
+		Vector2 size = sprite.bounds.size;
+
 		return new Vector2(
-			sprite.bounds.extents.x * 2f * scale.x,
-			sprite.bounds.extents.y * 2f * scale.y
+			size.x * scale.x,
+			size.y * scale.y
 		);
 	}
 
@@ -53,13 +55,14 @@ static public class SpriteHelper {
 		);
 	}
 
-	static public void Expand(this SpriteRenderer renderer, Vector2 target) {
-		
-	}
-
+	/// <summary>
+	/// Evenly expand a sprite to be larger than a target size (in world space units).
+	/// </summary>
+	/// <param name="renderer">The sprite renderer.</param>
+	/// <param name="target">Tge target size.</param>
 	static public void ExpandEvenly(this SpriteRenderer renderer, Vector2 target) {
 		Vector2 size = renderer.WorldSize();
-		Vector2 sprite = renderer.sprite.WorldSize();
+		Vector2 sprite = renderer.sprite.bounds.size;
 		Vector2 scale = renderer.gameObject.transform.lossyScale;
 
 		float width = renderer.size.x;

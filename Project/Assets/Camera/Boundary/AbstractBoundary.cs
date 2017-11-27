@@ -28,9 +28,9 @@ public abstract class AbstractBoundary : MonoBehaviour {
 	// Methods:
 
 	/// <summary>
-	/// [UNITY] Called when the object is instantiated.
+	/// [UNITY] Called when the object is enabled.
 	/// </summary>
-	protected void Start() {
+	protected void OnEnable() {
 		// Attempt to apply the boundary to the provided holders.
 		bool applied = false;
 		foreach (GameObject obj in Targets) {

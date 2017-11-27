@@ -80,7 +80,7 @@ public class TrackingCamera : MonoBehaviour {
 		Vector2 target = Target.transform.position;
 
 		// Calculate if the distance is great enough.
-		if (Mathf.Abs(dampened.x - target.x) > Distance || Mathf.Abs(dampened.y - target.y) > Distance) {
+		if (Mathf.Abs(dampened.x - target.x) >= Distance || Mathf.Abs(dampened.y - target.y) >= Distance) {
 			wanted = target;
 		}
 	}

@@ -59,11 +59,19 @@ public class BoundCamera : MonoBehaviour, BoundaryHolder {
 	/// Reposition the camera to within the boundaries.
 	/// </summary>
 	public void Reposition() {
-		Vector2 rel_min = cache_tight.min + (viewport / 2f);
-		Vector2 rel_max = cache_tight.max - (viewport / 2f);
-		Vector2 pos = VectorHelper.Clamp(transform.position, rel_min, rel_max);
-
+		Vector2 pos = Ideal;
 		transform.position = new Vector3(pos.x, pos.y, transform.position.z);
+	}
+
+	/// <summary>
+	/// The ideal position for the camera.
+	/// </summary>
+	public Vector2 Ideal {
+		get {
+			Vector2 rel_min = cache_tight.min + (viewport / 2f);
+			Vector2 rel_max = cache_tight.max - (viewport / 2f);
+			return VectorHelper.Clamp(transform.position, rel_min, rel_max);
+		}
 	}
 
 	// -----------------------------------------------------------------------------------------------------------------
@@ -98,7 +106,7 @@ public class BoundCamera : MonoBehaviour, BoundaryHolder {
 	/// <summary>
 	/// [DEBUG] Draw the camera boundaries.
 	/// </summary>
-	void DebugDrawBoundaries() {
+	public void DebugDrawBoundaries() {
 		Vector2 min = cache_tight.min;
 		Vector2 max = cache_tight.max;
 		Debug.DrawLine(min, new Vector2(min.x, max.y), Color.magenta);
