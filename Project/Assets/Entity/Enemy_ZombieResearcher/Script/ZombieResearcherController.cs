@@ -11,7 +11,7 @@ public class ZombieResearcherController : MonoBehaviour, DeathBehaviour, HurtBeh
 	protected const float SPEED_ATTACK = 2f;
 
 	protected float SEE_DISTANCE = 8f;
-	protected float WALK_DISTANCE = 1f;
+	protected float WALK_DISTANCE = 2f;
 
 
 	// -----------------------------------------------------------------------------------------------------------------
@@ -137,11 +137,15 @@ public class ZombieResearcherController : MonoBehaviour, DeathBehaviour, HurtBeh
 	/// </summary>
 	void UpdateState() {
 		bool los = gameObject.CanSee(player_body, SEE_DISTANCE, GroundLayers);
-		animator.SetBool("Attacking", true);
+		animator.SetBool("Attacking", los);
 		if (los) {
 			state = State.ATTACK;
 			updateTicks = TicksAttacking;
 		} else {
+			if (state == State.ATTACK) {
+				anchor = transform.position;
+			}
+			
 			if (Random.Range(0, 2) == 1) {
 				state = State.WALK;
 				updateTicks = TicksMove;
@@ -175,8 +179,8 @@ public class ZombieResearcherController : MonoBehaviour, DeathBehaviour, HurtBeh
 	/// Do the actions for when the entity is walking.
 	/// </summary>
 	void ActWalk() {
-		Vector2 distance = anchor + new Vector2(transform.position.x, transform.position.y);
-		if (Mathf.Abs(distance.x) < WALK_DISTANCE || Mathf.Sign(moveDirection.x) != Mathf.Sign(distance.x)) {
+		Vector2 distance = anchor - new Vector2(transform.position.x, transform.position.y);
+		if (Mathf.Abs(distance.x) < WALK_DISTANCE || Mathf.Sign(moveDirection.x) == Mathf.Sign(distance.x)) {
 			animator.SetTrigger("Walk");
 			body.velocity = moveDirection;
 		} else {

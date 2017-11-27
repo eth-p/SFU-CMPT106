@@ -11,6 +11,7 @@ TagManager:
   - Init
   - Parallax
   - Graphics
+  - Background
   layers:
   - Default
   - TransparentFX

@@ -9,69 +9,69 @@ Prefab:
     m_Modifications: []
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 0}
-  m_RootGameObject: {fileID: 1829948962481114}
+  m_RootGameObject: {fileID: 1349809305495414}
   m_IsPrefabParent: 1
---- !u!1 &1829948962481114
+--- !u!1 &1349809305495414
 GameObject:
   m_ObjectHideFlags: 0
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   serializedVersion: 5
   m_Component:
-  - component: {fileID: 4218461536783158}
-  - component: {fileID: 212384450978554250}
-  - component: {fileID: 114147271552685212}
-  - component: {fileID: 114952124015127750}
-  m_Layer: 31
-  m_Name: Bound (BL)
-  m_TagString: Init
+  - component: {fileID: 4999199642049600}
+  - component: {fileID: 212947785927771860}
+  - component: {fileID: 61500225025618560}
+  m_Layer: 8
+  m_Name: Greenroom Floor
+  m_TagString: Ground
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!4 &4218461536783158
+--- !u!4 &4999199642049600
 Transform:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1829948962481114}
+  m_GameObject: {fileID: 1349809305495414}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -15.5, y: -5.5, z: 0}
+  m_LocalPosition: {x: -5.82, y: -2.27, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &114147271552685212
-MonoBehaviour:
+--- !u!61 &61500225025618560
+BoxCollider2D:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1829948962481114}
+  m_GameObject: {fileID: 1349809305495414}
   m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 393b4289d2be48f480b5b5de5f05230f, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  Targets: []
-  Type: 6
---- !u!114 &114952124015127750
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1829948962481114}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 5f467b5336614dfeab1924de18191407, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
---- !u!212 &212384450978554250
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: 0, y: 0}
+  m_SpriteTilingProperty:
+    border: {x: 0.34375, y: 0.125, z: 0.34375, w: 0.125}
+    pivot: {x: 0.5, y: 0.5}
+    oldSize: {x: 2.8125, y: 0.59375}
+    newSize: {x: 2.8125, y: 0.59375}
+    adaptiveTilingThreshold: 0.5
+    drawMode: 2
+    adaptiveTiling: 0
+  m_AutoTiling: 1
+  serializedVersion: 2
+  m_Size: {x: 2.8125, y: 0.59375}
+  m_EdgeRadius: 0
+--- !u!212 &212947785927771860
 SpriteRenderer:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1829948962481114}
+  m_GameObject: {fileID: 1349809305495414}
   m_Enabled: 1
   m_CastShadows: 0
   m_ReceiveShadows: 0
@@ -97,15 +97,15 @@ SpriteRenderer:
   m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
-  m_SortingLayerID: 805711975
-  m_SortingLayer: 12
-  m_SortingOrder: 999
-  m_Sprite: {fileID: 21300004, guid: fba3e8acd75994372b95507898738214, type: 3}
+  m_SortingLayerID: 0
+  m_SortingLayer: 0
+  m_SortingOrder: 0
+  m_Sprite: {fileID: 21300000, guid: c24fcbaeb60c0488b9a273e7e0fa5991, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
-  m_DrawMode: 0
-  m_Size: {x: 1, y: 1}
+  m_DrawMode: 2
+  m_Size: {x: 2.8125, y: 0.59375}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 1

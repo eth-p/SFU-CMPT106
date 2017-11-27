@@ -64,10 +64,10 @@ public class StaticBoundary : AbstractBoundary {
 	}
 
 	/// <summary>
-	/// [UNITY] Called when the object is instantiated.
+	/// [UNITY] Called when the object is enabled.
 	/// </summary>
-	protected void Start() {
+	protected void OnEnable() {
 		CalculateExtents();
-		base.Start();
+		base.OnEnable();
 	}
 }

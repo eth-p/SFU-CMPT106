@@ -34,7 +34,15 @@ public class Health : MonoBehaviour {
 		}
 	}
 
-	
+	/// <summary>
+	/// The current invincibility frames.
+	/// </summary>
+	public uint Invincibility {
+		get { return invincibility; }
+		set { invincibility = value;  }
+	}
+
+
 	// -----------------------------------------------------------------------------------------------------------------
 	// Variables:
 
