@@ -4,4 +4,10 @@
 EditorBuildSettings:
   m_ObjectHideFlags: 0
   serializedVersion: 2
-  m_Scenes: []
+  m_Scenes:
+  - enabled: 1
+    path: Assets/Level/Bugboss.unity
+    guid: d920c6f139e1e41c5be5a34ae5cd1f99
+  - enabled: 1
+    path: Assets/Menu/Scene/Main.unity
+    guid: 017975c969d91484884a917a77150854

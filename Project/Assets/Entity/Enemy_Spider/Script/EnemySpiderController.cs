@@ -1,7 +1,8 @@
-﻿using System;
-using System.Collections;
-using UnityEngine;
+﻿using UnityEngine;
 
+/// <summary>
+/// The main controller for the zombie researcher enemy.
+/// </summary>
 public class EnemySpiderController : MonoBehaviour, DeathBehaviour, HurtBehaviour
 {
     // -----------------------------------------------------------------------------------------------------------------
@@ -11,22 +12,44 @@ public class EnemySpiderController : MonoBehaviour, DeathBehaviour, HurtBehaviou
     protected const float SPEED_ATTACK = 2f;
 
     protected float SEE_DISTANCE = 8f;
-    protected float WALK_DISTANCE = 1f;
+    protected float WALK_DISTANCE = 2f;
 
 
     // -----------------------------------------------------------------------------------------------------------------
     // Configurable:
 
+    /// <summary>
+    /// The layers which obstruct the enemy line of sight.
+    /// </summary>
     public LayerMask GroundLayers;
-    public int TicksIdle = 60;
-    public int TicksMove = 60;
-    public int TicksAttacking = 180;
+
+    /// <summary>
+    /// The toxin which the spider would spit
+    /// </summary>
     public GameObject spider_spit;
+
+    /// <summary>
+    /// The number of ticks before a state change when the entity is idle. 
+    /// </summary>
+    public int TicksIdle = 60;
+
+    /// <summary>
+    /// The number of ticks before a state change when the entity is moving around. 
+    /// </summary>
+    public int TicksMove = 60;
+
+    /// <summary>
+    /// The number of ticks before a state change when the entity is attacking. 
+    /// </summary>
+    public int TicksAttacking = 180;
 
 
     // -----------------------------------------------------------------------------------------------------------------
     // Enum:
 
+    /// <summary>
+    /// The entity's state.
+    /// </summary>
     public enum State
     {
         IDLE,
@@ -34,42 +57,48 @@ public class EnemySpiderController : MonoBehaviour, DeathBehaviour, HurtBehaviou
         ATTACK
     }
 
+
     // -----------------------------------------------------------------------------------------------------------------
     // Internal:
-
-    private int moveTicks;
-    private Vector2 moveDirection;
 
     private int updateTicks;
     private State state;
 
-    private Health health;
     private Rigidbody2D body;
     private Animator animator;
 
     private GameObject player;
     private Rigidbody2D player_body;
 
+    private Vector2 moveDirection;
     private Vector2 anchor;
+
     private Transform spit_from;
 
 
     // -----------------------------------------------------------------------------------------------------------------
     // Unity:
 
+    /// <summary>
+    /// [UNITY] Called when the object is instantiated.
+    /// </summary>
     void Start()
     {
         animator = GetComponent<Animator>();
         body = GetComponent<Rigidbody2D>();
-        spit_from = GameObject.Find("Spit From").transform;
 
         player = GameObject.Find("Player");
         player_body = player.GetComponent<Rigidbody2D>();
 
         state = State.WALK;
         anchor = transform.position;
+
+        spit_from = GameObject.Find("Spit From").transform;
     }
 
+    /// <summary>
+    /// [UNITY] Called every tick.
+    /// </summary>
     void FixedUpdate()
     {
         if (--updateTicks < 0)
@@ -94,28 +123,40 @@ public class EnemySpiderController : MonoBehaviour, DeathBehaviour, HurtBehaviou
     }
 
 
+    // -----------------------------------------------------------------------------------------------------------------
+    // Implement: DeathBehaviour, HurtBehaviour
+
+    /// <inheritdoc cref="DeathBehaviour.OnDeath"/>
     public void OnDeath()
     {
+        animator.SetTrigger("Death");
         gameObject.SetActive(false);
-        Destroy(gameObject);
+        Destroy(this);
     }
 
+    /// <inheritdoc cref="HurtBehaviour.OnHurt"/>
     public void OnHurt(float amount)
     {
         animator.SetBool("Hurt", true);
     }
 
+    /// <inheritdoc cref="HurtBehaviour.OnVulnerable"/>
     public void OnVulnerable()
     {
         animator.SetBool("Hurt", false);
     }
 
 
+    // -----------------------------------------------------------------------------------------------------------------
+    // Methods:
 
+    /// <summary>
+    /// Update the entity's state.
+    /// </summary>
     void UpdateState()
     {
         bool los = gameObject.CanSee(player_body, SEE_DISTANCE, GroundLayers);
-        animator.SetBool("Attacking", true);
+        animator.SetBool("Attacking", los);
         if (los)
         {
             state = State.ATTACK;
@@ -123,10 +164,16 @@ public class EnemySpiderController : MonoBehaviour, DeathBehaviour, HurtBehaviou
         }
         else
         {
-            if (UnityEngine.Random.Range(0, 2) == 1)
+            if (state == State.ATTACK)
+            {
+                anchor = transform.position;
+            }
+
+            if (Random.Range(0, 2) == 1)
             {
                 state = State.WALK;
                 updateTicks = TicksMove;
+                RngDirection();
             }
             else
             {
@@ -136,56 +183,44 @@ public class EnemySpiderController : MonoBehaviour, DeathBehaviour, HurtBehaviou
         }
     }
 
+    /// <summary>
+    /// Spider will spit toxin once within the range
+    /// </summary>
     void ActAttack()
     {
-        if (Math.Abs(gameObject.transform.position.x-player.transform.position.x) < 2 ){
+        if (Mathf.Abs(gameObject.transform.position.x - player.transform.position.x) < 1)
+        {
             body.velocity = new Vector2(0f, 0f);
-            (Instantiate(spider_spit, spit_from.position, Quaternion.identity) as GameObject).transform.parent = spit_from;
-            Physics2D.IgnoreCollision(gameObject.GetComponent<Collider2D>(), spider_spit.GetComponent<Collider2D>());            
+            Instantiate(spider_spit, spit_from.position, Quaternion.identity);
         }
         else
         {
             body.velocity = new Vector2(Mathf.Sign(player_body.position.x - body.position.x) * SPEED_WALK, 0f);
             if (body.velocity.x < 0)
             {
-                FlipLeft();
+                FaceLeft();
             }
             else
             {
-                FlipRight();
+                FaceRight();
             }
         }
-      
-
     }
 
+    /// <summary>
+    /// Do the actions for when the entity is idle.
+    /// </summary>
     void ActIdle()
     {
     }
 
+    /// <summary>
+    /// Do the actions for when the entity is walking.
+    /// </summary>
     void ActWalk()
     {
-        if (--moveTicks < 0)
-        {
-            moveTicks = TicksMove;
-
-            // Determine direction.
-            int rng = UnityEngine.Random.Range(0, 2);
-            if (rng == 0)
-            {
-                FlipLeft();
-                moveDirection = new Vector2(-SPEED_WALK, 0);
-            }
-            else
-            {
-                FlipRight();
-                moveDirection = new Vector2(SPEED_WALK, 0);
-            }
-        }
-
-        // Update.
-        Vector2 distance = anchor + new Vector2(transform.position.x, transform.position.y);
-        if (Mathf.Abs(distance.x) < WALK_DISTANCE || Mathf.Sign(moveDirection.x) != Mathf.Sign(distance.x))
+        Vector2 distance = anchor - new Vector2(transform.position.x, transform.position.y);
+        if (Mathf.Abs(distance.x) < WALK_DISTANCE || Mathf.Sign(moveDirection.x) == Mathf.Sign(distance.x))
         {
             animator.SetTrigger("Walk");
             body.velocity = moveDirection;
@@ -196,7 +231,27 @@ public class EnemySpiderController : MonoBehaviour, DeathBehaviour, HurtBehaviou
         }
     }
 
-    void FlipLeft()
+    /// <summary>
+    /// Pick the direction which the entity moves during its walking state.
+    /// </summary>
+    void RngDirection()
+    {
+        if (Random.Range(0, 2) == 0)
+        {
+            FaceLeft();
+            moveDirection = new Vector2(-SPEED_WALK, 0);
+        }
+        else
+        {
+            FaceRight();
+            moveDirection = new Vector2(SPEED_WALK, 0);
+        }
+    }
+
+    /// <summary>
+    /// Make the entity face left.
+    /// </summary>
+    void FaceLeft()
     {
         Vector3 ls = transform.localScale;
         if (ls.x < 0)
@@ -205,7 +260,10 @@ public class EnemySpiderController : MonoBehaviour, DeathBehaviour, HurtBehaviou
         }
     }
 
-    void FlipRight()
+    /// <summary>
+    /// Make the entity face right.
+    /// </summary>
+    void FaceRight()
     {
         Vector3 ls = transform.localScale;
         if (ls.x > 0)
@@ -214,4 +272,3 @@ public class EnemySpiderController : MonoBehaviour, DeathBehaviour, HurtBehaviou
         }
     }
 }
-

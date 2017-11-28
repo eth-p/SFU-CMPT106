@@ -9,6 +9,9 @@ TagManager:
   - Projectile
   - Player Weapon
   - Init
+  - Parallax
+  - Graphics
+  - Background
   layers:
   - Default
   - TransparentFX
@@ -39,12 +42,27 @@ TagManager:
   - 
   - 
   - 
-  - 
-  - 
+  - Instantiated
+  - Background
   - Init
   m_SortingLayers:
   - name: Default
     uniqueID: 0
+    locked: 0
+  - name: Background (Behind)
+    uniqueID: 3562694329
+    locked: 0
+  - name: Parallax 1
+    uniqueID: 616109561
+    locked: 0
+  - name: Parallax 2
+    uniqueID: 218154837
+    locked: 0
+  - name: Parallax 3
+    uniqueID: 3223453425
+    locked: 0
+  - name: Background
+    uniqueID: 4084572917
     locked: 0
   - name: Ground
     uniqueID: 1946407219

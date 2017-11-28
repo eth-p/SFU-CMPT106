@@ -1,99 +1,101 @@
 ﻿using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Assertions;
 
 /// <summary>
 /// A camera restricted to a specific area in the world.
 /// </summary>
-public class BoundCamera : MonoBehaviour {
+public class BoundCamera : MonoBehaviour, BoundaryHolder {
 	// -----------------------------------------------------------------------------------------------------------------
-	// Constant:
-
-	protected Vector2 SIZE = new Vector2(17.8f, 10f);
-
-	
-	// -----------------------------------------------------------------------------------------------------------------
-	// Configurable:
+	// Public:
 
 	/// <summary>
-	/// The camera boundaries.
+	/// The viewport size.
 	/// </summary>
-	public LinkedList<Boundary> Boundaries = new LinkedList<Boundary>();
-
+	public Vector2 Viewport {
+		get { return viewport; }
+	}
+	
 
 	// -----------------------------------------------------------------------------------------------------------------
 	// Variables:
+	
+	protected BoundaryList boundaries = new BoundaryList();
 
-	protected Vector2 min;
-	protected Vector2 max;
+	protected bool cache_loose_stale;
+	protected BoundaryArea cache_loose;
+	protected BoundaryArea cache_tight;
 
 	protected Camera cam;
+	protected Vector2 viewport;
 
 
 	// -----------------------------------------------------------------------------------------------------------------
 	// API:
 
 	/// <summary>
-	/// Recalculate the minimum and maximum coordinates.
+	/// Recalculate the camera viewport.
 	/// </summary>
-	public void Recalculate() {
-		min = new Vector2(float.MinValue, float.MinValue);
-		max = new Vector2(float.MaxValue, float.MaxValue);
+	public void RecalculateViewport() {
+		viewport = cam.Coverage();
+	}
 
-		LinkedListNode<Boundary> node = Boundaries.First;
-		LinkedListNode<Boundary> last;
-		while (node != null) {
-			Boundary boundary = node.Value;
-			last = node;
-			node = node.Next;
+	/// <summary>
+	/// Recalculate the tight bounds.
+	/// </summary>
+	public void RecalculateBounds() {
+		// Update bounds.
+		boundaries.Update();
+		if (boundaries.Stale) {
+			boundaries.Prune();
+		}
 
-			// Remove dead boundaries.
-			if (boundary.Dead) {
-				Boundaries.Remove(last);
-				continue;
-			}
+		// Calculate tight bounds and invalidate loose bounds.
+		cache_tight = boundaries.CalculateTight();
+		cache_loose_stale = true;
+	}
 
-			// Ignore disabled boundaries.
-			if (!boundary.Enabled) {
-				continue;
-			}
+	/// <summary>
+	/// Reposition the camera to within the boundaries.
+	/// </summary>
+	public void Reposition() {
+		Vector2 pos = Ideal;
+		transform.position = new Vector3(pos.x, pos.y, transform.position.z);
+	}
 
-			// Update dynamic boundaries.
-			if (boundary.Dynamic) {
-				boundary.Update();
-			}
-
-			// Apply boundary.
-			BoundaryType type = boundary.Type;
-
-			if (type == BoundaryType.TOP || type == BoundaryType.TOP_LEFT || type == BoundaryType.TOP_RIGHT) {
-				max.y = Mathf.Min(max.y, boundary.Location.y);
-			} else if (type == BoundaryType.BOTTOM || type == BoundaryType.BOTTOM_LEFT || type == BoundaryType.BOTTOM_RIGHT) {
-				min.y = Mathf.Max(min.y, boundary.Location.y);
-			}
-
-			if (type == BoundaryType.LEFT || type == BoundaryType.TOP_LEFT || type == BoundaryType.BOTTOM_LEFT) {
-				min.x = Mathf.Max(min.x, boundary.Location.x);
-			} else if (type == BoundaryType.RIGHT || type == BoundaryType.TOP_RIGHT || type == BoundaryType.BOTTOM_RIGHT) {
-				max.x = Mathf.Min(max.x, boundary.Location.x);
-			}
+	/// <summary>
+	/// The ideal position for the camera.
+	/// </summary>
+	public Vector2 Ideal {
+		get {
+			Vector2 rel_min = cache_tight.min + (viewport / 2f);
+			Vector2 rel_max = cache_tight.max - (viewport / 2f);
+			return VectorHelper.Clamp(transform.position, rel_min, rel_max);
 		}
 	}
 
-	/// <summary>
-	/// Remove a camera boundary.
-	/// </summary>
-	/// <param name="boundary">The boundary object.</param>
-	public void RemoveBoundary(Boundary boundary) {
-		Boundaries.Remove(boundary);
+	// -----------------------------------------------------------------------------------------------------------------
+	// Implement: BoundaryHolder
+
+	/// <inheritdoc cref="BoundaryHolder.Boundaries"/>
+	public BoundaryList Boundaries {
+		get { return boundaries; }
 	}
 
-	/// <summary>
-	/// Add a camera boundary.
-	/// </summary>
-	/// <param name="boundary">The boundary object.</param>
-	public void AddBoundary(Boundary boundary) {
-		if (!Boundaries.Contains(boundary)) {
-			Boundaries.AddLast(boundary);
+	/// <inheritdoc cref="BoundaryHolder.Tight"/>
+	public BoundaryArea Tight {
+		get { return cache_tight; }
+	}
+
+	/// <inheritdoc cref="BoundaryHolder.Loose"/>
+	public BoundaryArea Loose {
+		get {
+			if (cache_loose_stale) {
+				cache_loose_stale = false;
+				cache_loose = Boundaries.CalculateLoose();
+			}
+
+			return cache_loose;
 		}
 	}
 
@@ -102,20 +104,11 @@ public class BoundCamera : MonoBehaviour {
 	// Methods:
 
 	/// <summary>
-	/// Reposition the camera to within the boundaries.
-	/// </summary>
-	public void Reposition() {
-		Vector2 rel_min = min + (SIZE / 2f);
-		Vector2 rel_max = max - (SIZE / 2f);
-		Vector2 pos = ((Vector2) transform.position).Clamp(rel_min, rel_max);
-
-		transform.position = new Vector3(pos.x, pos.y, transform.position.z);
-	}
-
-	/// <summary>
 	/// [DEBUG] Draw the camera boundaries.
 	/// </summary>
-	void DebugDrawBoundaries() {
+	public void DebugDrawBoundaries() {
+		Vector2 min = cache_tight.min;
+		Vector2 max = cache_tight.max;
 		Debug.DrawLine(min, new Vector2(min.x, max.y), Color.magenta);
 		Debug.DrawLine(min, new Vector2(max.x, min.y), Color.magenta);
 		Debug.DrawLine(max, new Vector2(min.x, max.y), Color.magenta);
@@ -125,14 +118,26 @@ public class BoundCamera : MonoBehaviour {
 	/// <summary>
 	/// [UNITY] Called every frame.
 	/// </summary>
-	void Update() {
+	protected void Update() {
 		// Recalculate and reposition.
-		Recalculate();
+		RecalculateBounds();
 		Reposition();
 
 		// Debug.
 		if (DebugSettings.CAMERA_LIMITS) {
 			DebugDrawBoundaries();
 		}
+	}
+
+
+	/// <summary>
+	/// [UNITY] Called when the object is instantiated.
+	/// </summary>
+	protected void Start() {
+		cam = GetComponent<Camera>();
+		Assert.IsNotNull(cam);
+
+		RecalculateViewport();
+		RecalculateBounds();
 	}
 }

@@ -12,7 +12,7 @@ public class SpiderSpitController : MonoBehaviour {
 
     // Update is called once per frame
     void Update () {
-        Physics2D.IgnoreCollision(gameObject.GetComponent<Collider2D>(), spider.GetComponent<Collider2D>());
+        Physics2D.IgnoreLayerCollision(29, 8);
         Destroy(gameObject, 0.5f);
     }
     

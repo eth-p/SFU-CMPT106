@@ -67,7 +67,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1664565659721836}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -2.031, y: -2.41, z: 0}
+  m_LocalPosition: {x: -10.141802, y: -5.5835705, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 4524009602345534}
@@ -88,9 +88,9 @@ BoxCollider2D:
   m_UsedByComposite: 0
   m_Offset: {x: -0.000000059604645, y: -0.0010368824}
   m_SpriteTilingProperty:
-    border: {x: 0.15625, y: 0.15625, z: 0.15625, w: 0.15625}
+    border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
-    oldSize: {x: 0.5, y: 0.5}
+    oldSize: {x: 0.1875, y: 0.1875}
     newSize: {x: 0.5, y: 0.5}
     adaptiveTilingThreshold: 0.5
     drawMode: 0
@@ -210,7 +210,7 @@ ParticleSystem:
   moveWithTransform: 1
   moveWithCustomTransform: {fileID: 0}
   scalingMode: 1
-  randomSeed: -437352246
+  randomSeed: 8936013
   InitialModule:
     serializedVersion: 3
     enabled: 1
@@ -3500,8 +3500,8 @@ ParticleSystemRenderer:
   m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
-  m_SortingLayerID: 0
-  m_SortingLayer: 0
+  m_SortingLayerID: -462913625
+  m_SortingLayer: 10
   m_SortingOrder: 0
   m_RenderMode: 0
   m_SortMode: 0
@@ -3553,7 +3553,7 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: -1056422523
-  m_SortingLayer: 3
+  m_SortingLayer: 9
   m_SortingOrder: 0
   m_Sprite: {fileID: 21300002, guid: 1f10acabc74ee4a2087d6f31efdf530c, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}

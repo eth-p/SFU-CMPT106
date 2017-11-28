@@ -53,7 +53,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 393b4289d2be48f480b5b5de5f05230f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Cameras: []
+  Targets: []
   Type: 6
 --- !u!114 &114952124015127750
 MonoBehaviour:
@@ -98,7 +98,7 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 805711975
-  m_SortingLayer: 7
+  m_SortingLayer: 12
   m_SortingOrder: 999
   m_Sprite: {fileID: 21300004, guid: fba3e8acd75994372b95507898738214, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
