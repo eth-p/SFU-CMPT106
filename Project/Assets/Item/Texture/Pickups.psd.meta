@@ -1,11 +1,12 @@
 fileFormatVersion: 2
 guid: 1f10acabc74ee4a2087d6f31efdf530c
-timeCreated: 1511326640
+timeCreated: 1511842589
 licenseType: Free
 TextureImporter:
   fileIDToRecycleName:
     21300000: Health
     21300002: Health Small
+    21300004: Health Container
   externalObjects: {}
   serializedVersion: 4
   mipmaps:
@@ -92,13 +93,27 @@ TextureImporter:
       name: Health Small
       rect:
         serializedVersion: 2
-        x: 0
-        y: 112
-        width: 16
-        height: 16
+        x: 5
+        y: 117
+        width: 6
+        height: 6
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
-      border: {x: 5, y: 5, z: 5, w: 5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: Health Container
+      rect:
+        serializedVersion: 2
+        x: 4
+        y: 100
+        width: 8
+        height: 8
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
