@@ -1,9 +1,9 @@
 ﻿using UnityEngine;
 
 /// <summary>
-/// Increase the maximum health of an entity on contact.
+/// Heal an entity on contact.
 /// </summary>
-public class HealthContainerPickupController : MonoBehaviour {
+public class HealthPickupController : MonoBehaviour {
 	// -----------------------------------------------------------------------------------------------------------------
 	// Configurable:
 
@@ -27,8 +27,7 @@ public class HealthContainerPickupController : MonoBehaviour {
 			return; // Not healable.
 		}
 
-		// Increase health and heal entity.
-		health.Maximum += Amount;
+		// Heal entity.
 		health.Value += Amount;
 		
 		// Destroy pickup.

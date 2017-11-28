@@ -139,7 +139,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 1
+  m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 50, y: -30, z: 0}
 --- !u!108 &128968422
 Light:
@@ -151,7 +151,7 @@ Light:
   serializedVersion: 8
   m_Type: 1
   m_Color: {r: 1, g: 1, b: 1, a: 1}
-  m_Intensity: 1
+  m_Intensity: 0.3
   m_Range: 10
   m_SpotAngle: 30
   m_CookieSize: 10
@@ -313,7 +313,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Quantity: 15
   Rarity: 1
-  ItemsGuaranteed: []
+  ItemsGuaranteed:
+  - {fileID: 1810925913276300, guid: 71e5a5a6f00b342769ce76e021da27bc, type: 2}
   ItemsOptional:
   - {fileID: 1664565659721836, guid: 635416ade433340b7b93fc216384dfe2, type: 2}
 --- !u!114 &206687431
@@ -464,7 +465,7 @@ SpriteRenderer:
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 1
-  m_Size: {x: 29.779026, y: 10.377937}
+  m_Size: {x: 11.35195, y: 10.377937}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 1
@@ -476,7 +477,7 @@ Transform:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 288340221}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -5.065, y: 0.728, z: 0}
+  m_LocalPosition: {x: -14.279, y: 0.728, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
@@ -930,7 +931,7 @@ Prefab:
     - target: {fileID: 108288795795394576, guid: a627eb6ead69e49cbb6fb65cc3801d2a,
         type: 2}
       propertyPath: m_Enabled
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 1331644319527040, guid: a627eb6ead69e49cbb6fb65cc3801d2a, type: 2}
       propertyPath: m_Name
@@ -945,6 +946,11 @@ Prefab:
         type: 2}
       propertyPath: Jumps
       value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 114398991471739262, guid: a627eb6ead69e49cbb6fb65cc3801d2a,
+        type: 2}
+      propertyPath: Maximum
+      value: 10
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: a627eb6ead69e49cbb6fb65cc3801d2a, type: 2}
@@ -1106,7 +1112,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 4089068238532718, guid: 8c616834c6891493aaa25fe3cfe1924e, type: 2}
       propertyPath: m_RootOrder
-      value: 2
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 1030193645213542, guid: 8c616834c6891493aaa25fe3cfe1924e, type: 2}
       propertyPath: m_Name
@@ -1187,7 +1193,7 @@ SpriteRenderer:
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 2
-  m_Size: {x: 16.001755, y: 7.31749}
+  m_Size: {x: 17.69453, y: 10.267757}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 1
@@ -1199,7 +1205,7 @@ Transform:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1298107251}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0.008, y: 0.384, z: 0}
+  m_LocalPosition: {x: 0.276, y: 0.745, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
@@ -1563,7 +1569,7 @@ Transform:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1667015611}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -20.25, y: 0.45, z: 0}
+  m_LocalPosition: {x: -19.68, y: 0.45, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
@@ -1743,6 +1749,22 @@ Prefab:
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 5bb0c97a120e2428492610e6261ac0ca, type: 2}
   m_IsPrefabParent: 0
+--- !u!1 &2008559391 stripped
+GameObject:
+  m_PrefabParentObject: {fileID: 1209876083107346, guid: a627eb6ead69e49cbb6fb65cc3801d2a,
+    type: 2}
+  m_PrefabInternal: {fileID: 923868196}
+--- !u!114 &2008559399
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 2008559391}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 658b3f7b1f3249debfc2ad4871052964, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &2064453230
 Prefab:
   m_ObjectHideFlags: 0
