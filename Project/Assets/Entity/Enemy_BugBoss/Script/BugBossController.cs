@@ -61,7 +61,14 @@ public class BugBossController : MonoBehaviour, DeathBehaviour, HurtBehaviour {
 		body = GetComponent<Rigidbody2D>();
 		health = GetComponent<Health>();
 
-		moveDirection.x = -1f;
+        GameObject backGroundMusic = GameObject.Find("level_background&revised");
+        AudioSource backAudioSrc = backGroundMusic.GetComponent<AudioSource>();
+        backAudioSrc.Pause();
+
+        AudioSource audio = GetComponent<AudioSource>();
+        audio.Play();
+
+        moveDirection.x = -1f;
 		state = State.DAZED;
 		health.Invincibility = 60;
 		dazedTicks = 60;

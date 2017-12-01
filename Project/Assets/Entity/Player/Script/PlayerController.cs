@@ -153,7 +153,10 @@ public class PlayerController : MonoBehaviour, DeathBehaviour, HurtBehaviour {
 			jumping = true;
 			jumpsRemaining--;
 			vy = 30;
-		}
+
+            AudioSource audio = GetComponent<AudioSource>();
+            audio.Play();
+        }
 
 		// Movement.
 		float max = (move < 0 && facingLeft) || (move > 0 && !facingLeft) ? SPEED_MAX_FORWARDS : SPEED_MAX_BACKWARDS;

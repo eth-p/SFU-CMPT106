@@ -24,9 +24,11 @@ public class ProjectileWeapon : AbstractWeapon {
 	/// </summary>
 	protected override void OnUse() {
 		Assert.IsNotNull(Bullet);
-		
-		// Calculate scale to world.
-		Vector2 scale = transform.localScale;
+        AudioSource audio = GetComponent<AudioSource>();
+        audio.Play();
+
+        // Calculate scale to world.
+        Vector2 scale = transform.localScale;
 		Transform trans = transform;
 		while ((trans = trans.parent) != null) {
 			scale.x *= trans.localScale.x;
@@ -57,5 +59,5 @@ public class ProjectileWeapon : AbstractWeapon {
 	/// </summary>
 	void Start() {
 		animator = GetComponent<Animator>();
-	}
+    }
 }

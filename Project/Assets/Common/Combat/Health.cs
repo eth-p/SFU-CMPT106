@@ -17,14 +17,15 @@ public class Health : MonoBehaviour {
 	/// </summary>
 	public uint Iframes = 10;
 
-	
-	// -----------------------------------------------------------------------------------------------------------------
-	// Public:
 
-	/// <summary>
-	/// The current health value.
-	/// </summary>
-	public float Value {
+
+    // -----------------------------------------------------------------------------------------------------------------
+    // Public:
+
+    /// <summary>
+    /// The current health value.
+    /// </summary>
+    public float Value {
 		get { return health; }
 		set {
 			health = Mathf.Clamp(value, 0, Maximum);
@@ -64,7 +65,7 @@ public class Health : MonoBehaviour {
 	/// <param name="amount">The recovery value.</param>
 	public void Heal(float amount) {
 		health = Mathf.Min(health + amount, Maximum);
-	}
+    }
 
 	/// <summary>
 	/// Damage the entity.
@@ -187,7 +188,7 @@ public class Health : MonoBehaviour {
 		body = GetComponent<Rigidbody2D>();
 		col = GetComponent<Collider2D>();
 		Value = Maximum;
-	}
+    }
 
 	
 	/// <summary>
